@@ -28,7 +28,7 @@ public class Engine {
 
 	//Enums
 	public enum Managers{
-		INPUTMANAGER, COLLISIONMANAGER, CONTENTMANAGER, CAMERAMANAGER, SCREENMANAGER, SPRITEMANAGER
+		INPUTMANAGER, COLLISIONMANAGER, PHYSICSMANAGER, CONTENTMANAGER, CAMERAMANAGER, SCREENMANAGER, SPRITEMANAGER
 	}
 
 	//Attributes
@@ -100,12 +100,14 @@ public class Engine {
 		stateStack = new Stack<EngineState>();
 
 		//Create managers
-		managers = new Manager[6];
+		managers = new Manager[7];
 
 		//Create input manager
 		managers[Managers.INPUTMANAGER.ordinal()] = new InputManager();
 		//Creates collision manager
 		managers[Managers.COLLISIONMANAGER.ordinal()] = new CollisionManager();
+		//Creates Physics manager
+		managers[Managers.PHYSICSMANAGER.ordinal()] = new PhysicsManager();
 		//Creates content manager, uses ImageLoader, SpriteLoader, and LevelLoader to load content during initialization
 		managers[Managers.CONTENTMANAGER.ordinal()] = new ContentManager();
 		//Create the camera manager
@@ -117,7 +119,7 @@ public class Engine {
 
 
 		//Create the current state
-		pushState(new EngineState());
+		pushState(new TestState());
 		
 		
 		//Create objects!
@@ -164,7 +166,8 @@ public class Engine {
 		{
 			//Update managers
 			managers[Managers.INPUTMANAGER.ordinal()].update();
-
+			//Before objects update, apply global physics
+			managers[Managers.PHYSICSMANAGER.ordinal()].update();
 			//TODO: Offload to statemanager to keep track of stateStack
 			getCurrentState().update();
 			managers[Managers.SPRITEMANAGER.ordinal()].update();

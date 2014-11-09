@@ -223,7 +223,7 @@ public class GameObject {
 		}
 		catch(EmptyStackException e){
 			returnState = null;
-			System.out.println("No state to get from object.");
+			//System.out.println("No state to get from object.");
 		}
 		
 		return returnState;
@@ -443,8 +443,8 @@ public class GameObject {
 		//Construct affine transformation
 		AffineTransform transform = currentSystem;
 
-		//translation the affine transformation to the (top left) position of where this gameObject should be
-		transform.translate(position.getComponent(0), position.getComponent(1));
+		//translation the affine transformation to the (center) position of where this gameObject should be
+		transform.translate(position.getComponent(0) + width / 2.0, position.getComponent(1) + height / 2.0);
 
 		//Get angle of rotation
 		double angle = forward.getAngle();
