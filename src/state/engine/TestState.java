@@ -9,7 +9,9 @@ import engine.manager.ContentManager;
 import mathematics.Vec;
 import objects.GameObject;
 import objects.MovableGameObject;
+import state.object.ClickableBlockState;
 import state.object.PlayerOneState;
+import triggers.KillOnCollideTrigger;
 
 /**
  * An extension of EngineState which will the development test state
@@ -84,6 +86,15 @@ public class TestState extends EngineState {
 		player1.pushState(new PlayerOneState());
 		
 		addObj(player1);
+		
+		
+		MovableGameObject fallingBlock = new MovableGameObject(0,-300,100,100,new Vec(1.0,0.0),1);
+		fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
+		fallingBlock.setVisible(true);
+		fallingBlock.pushState(new ClickableBlockState());
+		//fallingBlock.setTriggerable(true);
+		//fallingBlock.addTrigger(new KillOnCollideTrigger());
+		addObj(fallingBlock);
 		
 		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).setFollow(player1);
 	}
