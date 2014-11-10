@@ -1,5 +1,7 @@
 package engine.manager;
 
+import java.util.ArrayList;
+
 import objects.GameObject;
 import objects.MovableGameObject;
 import triggers.Trigger;
@@ -87,5 +89,22 @@ public class CollisionManager extends Manager {
 		}//Ends loop of all objects
 		
 	}//Ends update
+	
+	
+	public ArrayList<CollisionBuffer> getCollisionsOnObject(GameObject obj1){
+		//Create an array list of collision buffers
+		ArrayList<CollisionBuffer> cBuffs = new ArrayList<CollisionBuffer>();
+		
+		for(GameObject obj2 : Engine.currentInstance.getCurrentState().getObjList()){
+			if(obj1 == obj2) continue;
+			
+			if(obj1.isColliding(obj2) && obj2.isColliding(obj1)){
+				//Get the collision buffer!
+				cBuffs.add(new CollisionBuffer(obj1, obj2));
+			}
+		}
+		
+		return cBuffs;
+	}
 
 }//Ends class

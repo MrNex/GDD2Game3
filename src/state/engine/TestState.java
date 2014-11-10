@@ -35,13 +35,6 @@ public class TestState extends EngineState {
 	public void init(){
 		super.init();
 		
-		//Force camera to put 0, 0 at top left corner for now
-		
-		/*
-		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).snapTo(
-				new Vec(600, 375));
-		*/
-		
 		//Create a floor
 		GameObject floor = new GameObject(0, 750, 2000, 100, new Vec(1.0, 0.0));
 		floor.setShape(new Rectangle2D.Double(), Color.black);
@@ -76,7 +69,7 @@ public class TestState extends EngineState {
 		
 		
 		//Create player
-		MovableGameObject player1 = new MovableGameObject(0, 550, 100, 100, new Vec(1.0, 0.0), 1.0001);
+		MovableGameObject player1 = new MovableGameObject(0, 550, 25, 25, new Vec(1.0, 0.0), 1.0001);
 		player1.setSprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("SpriteSheetTest"));
 		//player1.setShape(new Rectangle2D.Double(), Color.blue);
 		player1.setVisible(true);

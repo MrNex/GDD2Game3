@@ -51,7 +51,7 @@ public class PhysicsManager extends Manager {
 	 * @param mObj Object to apply global forces to
 	 */
 	public void applyGlobalForces(MovableGameObject mObj){
-		mObj.addForce(gravity);
+		mObj.addForce(Vec.scalarMultiply(gravity, mObj.getMass()));
 	}
 	
 	/**

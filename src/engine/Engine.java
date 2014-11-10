@@ -28,7 +28,13 @@ public class Engine {
 
 	//Enums
 	public enum Managers{
-		INPUTMANAGER, COLLISIONMANAGER, PHYSICSMANAGER, CONTENTMANAGER, CAMERAMANAGER, SCREENMANAGER, SPRITEMANAGER
+		INPUTMANAGER, 
+		COLLISIONMANAGER, 
+		PHYSICSMANAGER, 
+		CONTENTMANAGER, 
+		CAMERAMANAGER, 
+		SCREENMANAGER, 
+		SPRITEMANAGER
 	}
 
 	//Attributes
@@ -96,9 +102,9 @@ public class Engine {
 		//Set internal variables
 		running = false;
 
-		//Initialize state stack
-		stateStack = new Stack<EngineState>();
 
+		
+		
 		//Create managers
 		managers = new Manager[7];
 
@@ -112,15 +118,19 @@ public class Engine {
 		managers[Managers.CONTENTMANAGER.ordinal()] = new ContentManager();
 		//Create the camera manager
 		managers[Managers.CAMERAMANAGER.ordinal()] = new CameraManager();
-		//Creates the screen manager, hooking up input manager to the game window.
-		managers[Managers.SCREENMANAGER.ordinal()] = new ScreenManager();
 		//Creates the Sprite Manager
 		managers[Managers.SPRITEMANAGER.ordinal()] = new SpriteManager();
 
-
+		
+		
+		//Initialize state stack
+		stateStack = new Stack<EngineState>();
 		//Create the current state
 		pushState(new TestState());
 		
+		//Creates the screen manager, hooking up input manager to the game window.
+		managers[Managers.SCREENMANAGER.ordinal()] = new ScreenManager();
+
 		
 		//Create objects!
 		//((GameState)currentState).loadNextLevel();
@@ -147,6 +157,7 @@ public class Engine {
 	 */
 	public void start()
 	{		
+		System.out.println("Engine started");
 		//Set running to true
 		running = true;
 		//Begin drawloop
