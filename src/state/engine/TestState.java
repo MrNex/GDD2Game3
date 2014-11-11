@@ -11,6 +11,7 @@ import objects.GameObject;
 import objects.MovableGameObject;
 import state.object.ClickableBlockState;
 import state.object.PlayerOneState;
+import triggers.AddForceTrigger;
 import triggers.KillOnCollideTrigger;
 
 /**
@@ -36,7 +37,7 @@ public class TestState extends EngineState {
 		super.init();
 		
 		//Create a floor
-		GameObject floor = new GameObject(0, 750, 2000, 100, new Vec(1.0, 0.0));
+		GameObject floor = new GameObject(0, 750, 1800, 100, new Vec(1.0, 0.0));
 		floor.setShape(new Rectangle2D.Double(), Color.black);
 		floor.setVisible(true);
 		
@@ -67,6 +68,53 @@ public class TestState extends EngineState {
 		
 		addObj(step4);
 		
+		//Block that slows the player down
+		GameObject pushBlock = new GameObject(1400,550,200,200,new Vec(1.0,0.0));
+		pushBlock.setShape(new Rectangle2D.Double(),Color.white);
+		pushBlock.setVisible(true);
+		pushBlock.setSolid(false);
+		pushBlock.setTriggerable(true);
+		pushBlock.addTrigger(new AddForceTrigger(new Vec(-0.0000008,0.0)));
+		
+		addObj(pushBlock);
+		
+		GameObject hangBlock = new GameObject(2200,450,400,100,new Vec(1.0,0.0));
+		hangBlock.setShape(new Rectangle2D.Double(),Color.white);
+		hangBlock.setVisible(true);
+		hangBlock.setSolid(false);
+		hangBlock.setTriggerable(true);
+		hangBlock.addTrigger(new AddForceTrigger(new Vec(0.0,0.00000008)));
+		
+		addObj(hangBlock);
+		
+		//Block that bounces the player upwards
+		GameObject jumpBlock = new GameObject(1800,750,100,100,new Vec(1.0,0.0));
+		jumpBlock.setShape(new Rectangle2D.Double(),Color.green);
+		jumpBlock.setVisible(true);
+		jumpBlock.setTriggerable(true);
+		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-0.008)));
+		
+		addObj(jumpBlock);
+		
+		GameObject jumpBlock2 = new GameObject(2300,750,100,100,new Vec(1.0,0.0));
+		jumpBlock2.setShape(new Rectangle2D.Double(),Color.green);
+		jumpBlock2.setVisible(true);
+		jumpBlock2.setTriggerable(true);
+		jumpBlock2.addTrigger(new AddForceTrigger(new Vec(0.0,-0.008)));
+		
+		addObj(jumpBlock2);
+		
+		GameObject floor2 = new GameObject(1900, 750, 400, 100, new Vec(1.0, 0.0));
+		floor2.setShape(new Rectangle2D.Double(), Color.black);
+		floor2.setVisible(true);
+		
+		addObj(floor2);
+		
+		GameObject floor3 = new GameObject(2400, 750, 400, 100, new Vec(1.0, 0.0));
+		floor3.setShape(new Rectangle2D.Double(), Color.black);
+		floor3.setVisible(true);
+		
+		addObj(floor3);
 		
 		//Create player
 		MovableGameObject player1 = new MovableGameObject(0, 550, 25, 25, new Vec(1.0, 0.0), 1.0001);
@@ -81,13 +129,14 @@ public class TestState extends EngineState {
 		addObj(player1);
 		
 		
-		MovableGameObject fallingBlock = new MovableGameObject(0,-300,100,100,new Vec(1.0,0.0),1);
+		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0),5);
 		fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
 		fallingBlock.setVisible(true);
 		fallingBlock.pushState(new ClickableBlockState());
-		//fallingBlock.setTriggerable(true);
-		//fallingBlock.addTrigger(new KillOnCollideTrigger());
+		fallingBlock.setTriggerable(true);
+		fallingBlock.addTrigger(new KillOnCollideTrigger());
 		addObj(fallingBlock);
+
 		
 		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).setFollow(player1);
 	}
