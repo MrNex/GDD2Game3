@@ -1,5 +1,7 @@
 package triggers;
 
+import java.awt.Color;
+
 import engine.Engine;
 import objects.GameObject;
 import objects.MovableGameObject;
@@ -20,12 +22,15 @@ public class KillOnCollideTrigger extends Trigger{
 	@Override
 	public void action(GameObject triggeredBy, CollisionBuffer cBuff) {
 		// TODO Auto-generated method stub
-		MovableGameObject Obj = (MovableGameObject)triggeredBy;
-		if(Obj != null){
-			Engine.currentInstance.getCurrentState().removeObj(triggeredBy);
+		if(triggeredBy instanceof MovableGameObject){
+			
+			MovableGameObject Obj = (MovableGameObject)triggeredBy;
+			if(Obj != null){
+				Engine.currentInstance.getCurrentState().removeObj(triggeredBy);
+			}
 		}
+		attachedTo.removeTrigger(this);
+		attachedTo.setColor(Color.black);
 	}
-	
-	
 
 }
