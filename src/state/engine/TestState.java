@@ -11,6 +11,7 @@ import objects.GameObject;
 import objects.MovableGameObject;
 import state.object.ClickableBlockState;
 import state.object.PlayerOneState;
+import state.object.FallingObstacleState;
 import triggers.AddForceTrigger;
 import triggers.KillOnCollideTrigger;
 
@@ -127,6 +128,15 @@ public class TestState extends EngineState {
 		player1.pushState(new PlayerOneState());
 		
 		addObj(player1);
+		
+		
+		//Make the second player...invisible ;)
+		GameObject player2 = new GameObject(0,0,10,10, new Vec(1.0, 0.0));
+		player2.setVisible(true);
+		FallingObstacleState fallingObstacleState = new FallingObstacleState(this); //allows the player to drop obstacles
+		player2.pushState(fallingObstacleState);
+		player2.setTriggerable(true);
+		addObj(player2);
 		
 		
 		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0),5);
