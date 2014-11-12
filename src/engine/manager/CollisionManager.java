@@ -96,7 +96,7 @@ public class CollisionManager extends Manager {
 		ArrayList<CollisionBuffer> cBuffs = new ArrayList<CollisionBuffer>();
 		
 		for(GameObject obj2 : Engine.currentInstance.getCurrentState().getObjList()){
-			if(obj1 == obj2) continue;
+			if(obj1 == obj2 || !obj2.isSolid()) continue;
 			
 			if(obj1.isColliding(obj2) && obj2.isColliding(obj1)){
 				//Get the collision buffer!

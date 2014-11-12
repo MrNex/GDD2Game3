@@ -218,30 +218,36 @@ public class MovableGameObject extends GameObject {
 		boolean isOnFloor = false;
 		
 		if(cBuff.obj1 == this){
-			//Make sure the collision occurred on the Y Axis
-			//If not, skip checking this object
-			if(cBuff.obj2CollidedSide.getComponent(1) != 0) return false;
-			
-			//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
-			//is no more than the Y velocity of this object
-			//If this is true, the object is on the floor
-			double difference = Math.abs(cBuff.obj2.position.getComponent(1) - (position.getComponent(1) + height));
-			if(difference <= MovableGameObject.maxSpeed){
-				isOnFloor = true;
+			if(cBuff.obj2.isSolid()){
+				//Make sure the collision occurred on the Y Axis
+				//If not, skip checking this object
+				if(cBuff.obj2CollidedSide.getComponent(1) != 0) return false;
+				
+				//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
+				//is no more than the Y velocity of this object
+				//If this is true, the object is on the floor
+				double difference = Math.abs(cBuff.obj2.position.getComponent(1) - (position.getComponent(1) + height));
+				if(difference <= MovableGameObject.maxSpeed){
+					isOnFloor = true;
+				}
 			}
+
 		}
 		else{
-			//Make sure the collision occurred on the Y Axis
-			//If not, skip checking this object
-			if(cBuff.obj1CollidedSide.getComponent(1) != 0) return false;
-			
-			//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
-			//is no more than the Y velocity of this object
-			//If this is true, the object is on the floor
-			double difference = Math.abs(cBuff.obj1.position.getComponent(1) - (position.getComponent(1) + height));
-			if(difference <= MovableGameObject.maxSpeed){
-				isOnFloor = true;
+			if(cBuff.obj1.isSolid()){
+				//Make sure the collision occurred on the Y Axis
+				//If not, skip checking this object
+				if(cBuff.obj1CollidedSide.getComponent(1) != 0) return false;
+				
+				//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
+				//is no more than the Y velocity of this object
+				//If this is true, the object is on the floor
+				double difference = Math.abs(cBuff.obj1.position.getComponent(1) - (position.getComponent(1) + height));
+				if(difference <= MovableGameObject.maxSpeed){
+					isOnFloor = true;
+				}
 			}
+
 		}
 
 		
