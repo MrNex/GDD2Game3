@@ -118,8 +118,8 @@ public class TestState extends EngineState {
 		addObj(floor3);
 		
 		//Create player
-		MovableGameObject player1 = new MovableGameObject(0, 550, 25, 25, new Vec(1.0, 0.0), 1.0001);
-		player1.setSprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("SpriteSheetTest"));
+		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 1.0001);
+		player1.setSprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange"));
 		//player1.setShape(new Rectangle2D.Double(), Color.blue);
 		player1.setVisible(true);
 		
