@@ -26,7 +26,8 @@ public class Sprite {
 	private int currentRow, currentColumn;
 	private int frameWidth, frameHeight;
 	private int frameXPos, frameYPos;
-	boolean repeating;
+	private boolean repeating;
+	private boolean playing;
 	
 	//Accessors / Modifiers
 	/**
@@ -89,7 +90,39 @@ public class Sprite {
 	 */
 	public void queueAnimation(int row, boolean repeat){
 		//Create instruction set
-		animationQueue.add(new AnimationInstruction(row, repeat));
+		queueAnimation(new AnimationInstruction(row, repeat));
+	}
+	
+	private void queueAnimation(AnimationInstruction instruction){
+		animationQueue.add(instruction);
+		playing = true;
+	}
+	
+	/**
+	 * Queues an animation to be played only if nothing else is currently playing
+	 * 
+	 * @param row The row of the animation to play
+	 * @param repeat Should this animation repeat so long as no others are queued
+	 */
+	public void queueAnimationIfNotBusy(int row, boolean repeat){
+		if(!playing){
+			queueAnimation(row, repeat);
+		}
+		
+	}
+	
+	/**
+	 * Queues an animation to be played only if it's not already queued
+	 * or the currently playing row
+	 * 
+	 * @param row The row of the animation to play
+	 * @param repeat Should this animation repeat so long as no others are queued
+	 */
+	public void queueAnimationIfNotQueued(int row, boolean repeat){
+		AnimationInstruction instruction = new AnimationInstruction(row, repeat);
+		if(!animationQueue.contains(instruction) && playing && currentRow != row){
+			queueAnimation(instruction);
+		}
 	}
 	
 	
@@ -136,6 +169,11 @@ public class Sprite {
 				else if(repeating){
 					//Set column to 0 to start animation from beginning
 					currentColumn = 0;
+				}
+				//There is nothing else queued and no animation is repeating
+				else
+				{
+					playing = false;
 				}
 			}
 			//Else not at last column of animation yet
