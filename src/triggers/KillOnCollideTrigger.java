@@ -7,7 +7,7 @@ import engine.manager.ContentManager;
 import objects.GameObject;
 import objects.MovableGameObject;
 import buffer.CollisionBuffer;
-
+import state.object.PlayerOneState;
 /**
  * Used to wipe the player out of existence
  * @author aml9227 (Alan Leeson)
@@ -39,11 +39,12 @@ public class KillOnCollideTrigger extends Trigger{
 				}
 			}
 			*/
-			
-			MovableGameObject Obj = (MovableGameObject)triggeredBy;
-			if(Obj != null){
-				Engine.currentInstance.getCurrentState().removeObj(triggeredBy);
-			}
+				MovableGameObject Obj = (MovableGameObject)triggeredBy;
+				if(Obj != null){
+					if(triggeredBy.getCurrentState() instanceof  PlayerOneState){
+						Engine.currentInstance.getCurrentState().removeObj(triggeredBy);
+					}
+				}
 		}
 		attachedTo.removeTrigger(this);
 		attachedTo.setColor(Color.black);
