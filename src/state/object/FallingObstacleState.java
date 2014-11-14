@@ -30,7 +30,7 @@ public class FallingObstacleState extends ObjectState{
 		super();
 		theState = null; // :)
 		mouseCheck = false;
-		spawnLimit = 9;
+		spawnLimit = 90;
 		currentSpawn = 0;
 	}
 	
@@ -39,7 +39,7 @@ public class FallingObstacleState extends ObjectState{
 	{
 		theState = ourState;
 		mouseCheck = false;
-		spawnLimit = 9;
+		spawnLimit = 90;
 		currentSpawn = 0;
 	}
 	
