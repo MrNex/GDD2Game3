@@ -119,9 +119,16 @@ public class Sprite {
 	 * @param repeat Should this animation repeat so long as no others are queued
 	 */
 	public void queueAnimationIfNotQueued(int row, boolean repeat){
-		AnimationInstruction instruction = new AnimationInstruction(row, repeat);
-		if(!animationQueue.contains(instruction) && playing && currentRow != row){
-			queueAnimation(instruction);
+		
+		//CHANGED DUE TO THE FACT THAT IT WAS TRYING TO SEE IF A COMPLETELY NEW INSTRUCTION WAS IN THE QUEUE
+		boolean inQueue = false;
+		for (AnimationInstruction inst : animationQueue) {
+			if (inst.animationRowIndex == row && inst.repeatAnimation == repeat) {
+				inQueue = true;
+			}
+		}
+		if(!inQueue && playing && currentRow != row){
+			queueAnimation(new AnimationInstruction(row, repeat));
 		}
 	}
 	
