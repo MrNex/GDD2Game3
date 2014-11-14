@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import engine.Engine;
+import engine.Engine.Managers;
 import engine.manager.CameraManager;
+import engine.manager.InputManager;
 import engine.manager.ContentManager;
 import mathematics.Vec;
 import objects.GameObject;
@@ -37,6 +39,19 @@ public class TestState extends EngineState {
 	public void init(){
 		super.init();
 		
+		createTestLevel();
+	}
+	@Override
+	public void update(){
+		super.update();
+		
+		if(((InputManager)Engine.currentInstance.getManager(Managers.INPUTMANAGER)).isKeyPressed('r')){
+			wipeState();
+			createTestLevel();
+		}
+	}
+	
+	private void createTestLevel(){
 		GameObject startBumper = new GameObject(-100, 450, 100, 400, new Vec(1.0, 0.0));
 		startBumper.setShape(new Rectangle2D.Double(), Color.black);
 		startBumper.setVisible(true);
@@ -258,8 +273,8 @@ public class TestState extends EngineState {
 		
 		//Make the second player...invisible ;)
 		GameObject player2 = new GameObject(0,0,10,10, new Vec(1.0, 0.0));
-		player2.setVisible(true);
-		FallingObstacleState fallingObstacleState = new FallingObstacleState(this); //allows the player to drop obstacles
+		player2.setVisible(true);		//Make the second player invisible? No. He's visible with an alpha of 0. Two distinctly important different things.
+		FallingObstacleState fallingObstacleState = new FallingObstacleState(); //allows the player to drop obstacles
 		player2.pushState(fallingObstacleState);
 		player2.setTriggerable(true);
 		addObj(player2);
