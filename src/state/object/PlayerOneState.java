@@ -22,6 +22,8 @@ public class PlayerOneState extends ObjectState{
 	private double acceleration;
 	private double jumpAcceleration;
 	private boolean onFloor;
+	private boolean movingRight = false;
+	private boolean movingLeft = false;
 	
 	//Accessors / Modifiers
 	/**
@@ -73,6 +75,7 @@ public class PlayerOneState extends ObjectState{
 	 */
 	@Override
 	public void update() {
+		
 		//Get reference to input manager
 		InputManager input = (InputManager)Engine.currentInstance.getManager(Engine.Managers.INPUTMANAGER);
 		
@@ -98,12 +101,15 @@ public class PlayerOneState extends ObjectState{
 			}
 		}
 		
-		
 		//If left or right is pressed
 		if(input.isKeyPressed('a')){
+			attachedTo.getSprite().update();
+			attachedTo.getSprite().queueAnimationIfNotQueued(2, true);
 			translationVector.setComponent(0, -acceleration);
 		}
 		if(input.isKeyPressed('d')){
+			attachedTo.getSprite().update();
+			attachedTo.getSprite().queueAnimationIfNotQueued(0, true);
 			translationVector.setComponent(0, acceleration);
 		}
 		
