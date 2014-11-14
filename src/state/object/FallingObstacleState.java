@@ -25,7 +25,23 @@ public class FallingObstacleState extends ObjectState{
 	
 	//NO NEVER EVER DO THIS.
 	//needed for adding the objects to the teststate
-	//private TestState theState;					//REALLY BAD IDEA.
+	//private TestState theState;					//REALLY BAD IDEA. 
+	
+	//The code above should never be written:
+	//By keeping a reference to TestState the pointer associated with the variable
+	//Will never tell the garbage collector to come get test state
+	//Because there is still a pointer to test state, the garbage collector also will not clear
+	//Anything test state is connected to. Because they all are still valid pointers.
+	
+	//Imagine what happens if we popped test state from the engine and pushed a new state!
+	//EVERYTHING inside of test state would STILL be kept in memory along with a whole new state
+	//
+	//tldr: You've managed to cause a small (currently finite) memory leak in java.
+	
+	//Instead of the above solution, access the current active state with
+	//Engine.currentInstance.getCurrentState()
+	
+	
 	private boolean mouseCheck;
 	private int spawnLimit; //only let player2 spawn this many blocks
 	private int currentSpawn;
@@ -46,10 +62,7 @@ public class FallingObstacleState extends ObjectState{
 		mouseCheck = false;
 		spawnLimit = 90;
 		currentSpawn = 0;
-	}*/
-	
-	/*
-	 * Did you even look at the way any other class was made ever?
+	}
 	 * 
 	//we need to be able to add falling block to the state
 	//this will be used to add that connection
