@@ -75,7 +75,7 @@ public class TestState extends EngineState {
 		jumpBlock.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock.setVisible(true);
 		jumpBlock.setTriggerable(true);
-		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-0.008)));
+		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-18000)));
 		
 		addObj(jumpBlock);
 		
@@ -146,7 +146,7 @@ public class TestState extends EngineState {
 		jumpBlock2.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock2.setVisible(true);
 		jumpBlock2.setTriggerable(true);
-		jumpBlock2.addTrigger(new AddForceTrigger(new Vec(0.0,-0.008)));
+		jumpBlock2.addTrigger(new AddForceTrigger(new Vec(0.0,-10000)));
 		
 		addObj(jumpBlock2);
 		
@@ -173,7 +173,7 @@ public class TestState extends EngineState {
 		jumpBlock3.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock3.setVisible(true);
 		jumpBlock3.setTriggerable(true);
-		jumpBlock3.addTrigger(new AddForceTrigger(new Vec(0.0,-0.008)));
+		jumpBlock3.addTrigger(new AddForceTrigger(new Vec(0.0,-1000)));
 		
 		addObj(jumpBlock3);
 		
@@ -259,7 +259,7 @@ public class TestState extends EngineState {
 		addObj(jumpBlock2);
 	*/	
 		//Create player
-		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 1.0001);
+		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 10);
 		player1.setSprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange"));
 		//player1.setShape(new Rectangle2D.Double(), Color.blue);
 		player1.setVisible(true);
@@ -273,14 +273,14 @@ public class TestState extends EngineState {
 		
 		//Make the second player...invisible ;)
 		GameObject player2 = new GameObject(0,0,10,10, new Vec(1.0, 0.0));
-		player2.setVisible(true);		//Make the second player invisible? No. He's visible with an alpha of 0. Two distinctly important different things.
+		player2.setVisible(false);
 		FallingObstacleState fallingObstacleState = new FallingObstacleState(); //allows the player to drop obstacles
 		player2.pushState(fallingObstacleState);
 		player2.setTriggerable(true);
 		addObj(player2);
 		
 		
-		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0),5);
+		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0), 0.00001);
 		fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
 		fallingBlock.setVisible(true);
 		fallingBlock.pushState(new ClickableBlockState());

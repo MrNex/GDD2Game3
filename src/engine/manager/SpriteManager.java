@@ -9,7 +9,7 @@ package engine.manager;
 public class SpriteManager extends Manager {
 
 	//Immutable Attributes
-	private final double fps = 6.0;
+	private final double fps = 12.0;
 	
 	//Attributes
 	private long previousTime;		//Tracks the time previous cycle in ms

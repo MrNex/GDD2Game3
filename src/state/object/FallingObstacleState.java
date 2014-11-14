@@ -58,20 +58,17 @@ public class FallingObstacleState extends ObjectState{
 					100,
 					100,
 					new Vec(1.0,0.0),
-					5);
+					20);
 			fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
 			fallingBlock.setVisible(true);
 			fallingBlock.pushState(new ClickableBlockState());
 			fallingBlock.setTriggerable(true);
 			fallingBlock.addTrigger(new KillOnCollideTrigger());
-			fallingBlock.addForce(new Vec(0.0,0.05));
-			//theState.addObj(fallingBlock);
+
 			//Do it this way:
 			Engine.currentInstance.getCurrentState().addObj(fallingBlock);
 			
-			currentSpawn++;
-			//System.out.println(currentSpawn);
-			
+			currentSpawn++;			
 			mouseCheck = true;
 			
 		}

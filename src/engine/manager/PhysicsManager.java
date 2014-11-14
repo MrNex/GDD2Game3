@@ -30,7 +30,7 @@ public class PhysicsManager extends Manager {
 	 */
 	@Override
 	public void init() {
-		gravity = new Vec(0.0, 0.0000001);
+		gravity = new Vec(0.0, 0.15);
 	}
 
 	/**
@@ -52,6 +52,11 @@ public class PhysicsManager extends Manager {
 	 */
 	public void applyGlobalForces(MovableGameObject mObj){
 		mObj.addForce(Vec.scalarMultiply(gravity, mObj.getMass()));
+		Vec friction = new Vec(2);
+		friction.setComponent(0, -mObj.getVelocity().getComponent(0));
+		friction.scalarMultiply(0.01);
+		mObj.addForce(friction);
+
 	}
 	
 	/**
@@ -74,13 +79,24 @@ public class PhysicsManager extends Manager {
 		//Else if collision was in Y Axis
 		else{
 			axis = 1;
-			mObj.getVelocity().scalarMultiply(1.0/mObj.getMass());
 		}
 		
 		//Zero axis velocity
 		mObj.getVelocity().setComponent(axis, 0);
 		//Revert movable object on axis
 		mObj.revertAxis(axis);
+		
+		//If collidedWith is movable
+		if(collidedWith instanceof MovableGameObject){
+			//have their forces act on each other
+			MovableGameObject mObj2 = (MovableGameObject)collidedWith;
+			Vec rForce1 = Vec.scalarMultiply(mObj.getNetForce(), mObj.getMass() / (2 *mObj2.getMass()));
+			Vec rForce2 = Vec.scalarMultiply(mObj2.getNetForce(), mObj2.getMass()/ (2 *mObj.getMass()));
+			rForce1.setComponent(axis == 0 ? 1 : 0, 0);
+			rForce2.setComponent(axis == 0 ? 1 : 0, 0);
+			mObj2.addForce(rForce1);
+			mObj.addForce(rForce2);
+		}
 		
 	}
 

@@ -47,6 +47,14 @@ public class Sprite {
 	}
 	
 	/**
+	 * Gets the current row of the frame in the spriteshet
+	 * @return The current row of the current frame in the spritesheet
+	 */
+	public int getCurrentRow(){
+		return currentRow;
+	}
+	
+	/**
 	 * Constructs a Sprite
 	 * @param spriteSheet Image to draw frames from
 	 * @param numRows Number of rows of animations
@@ -76,6 +84,21 @@ public class Sprite {
 	private void setFrame(){
 		frameXPos = currentColumn * frameWidth;
 		frameYPos = currentRow * frameHeight;
+	}
+	
+	/**
+	 * Returns whether a particular row in a spritesheet is already playing
+	 * @param row determines whether this row is playing
+	 * @return Whether specified row is playing.
+	 */
+	public boolean isPlaying(int row){
+		return currentRow == row;
+	}
+	
+	public void playAnimation(int row, boolean repeat){
+		currentRow = row;
+		this.repeating = repeat;
+		currentColumn = 0;
 	}
 	
 	
@@ -127,8 +150,30 @@ public class Sprite {
 				inQueue = true;
 			}
 		}
-		if(!inQueue && playing && currentRow != row){
+		
+		if(!inQueue){
 			queueAnimation(new AnimationInstruction(row, repeat));
+		}
+	}
+	
+	/**
+	 * prematurely ends the currently playing animation by playing
+	 * the next animation in the queue, or setting the current frame 
+	 * to the final frame in the row if there is none.
+	 */
+	public void killAnimation(){
+		if(animationQueue.size() > 0){
+			//Dequeue next set of instructions
+			AnimationInstruction instructionSet = animationQueue.poll();
+			//Load next animation
+			currentRow = instructionSet.animationRowIndex;
+			repeating = instructionSet.repeatAnimation;
+			
+			//Set column to 0 to start animation from beginning
+			currentColumn = 0;
+		}
+		else{
+			currentColumn = numColumns[currentRow] - 1;
 		}
 	}
 	

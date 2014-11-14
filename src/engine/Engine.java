@@ -28,6 +28,7 @@ public class Engine {
 
 	//Enums
 	public enum Managers{
+		TIMEMANAGER,
 		INPUTMANAGER, 
 		COLLISIONMANAGER, 
 		PHYSICSMANAGER, 
@@ -106,8 +107,10 @@ public class Engine {
 		
 		
 		//Create managers
-		managers = new Manager[7];
+		managers = new Manager[8];
 
+		//Create time manager
+		managers[Managers.TIMEMANAGER.ordinal()] = new TimeManager();
 		//Create input manager
 		managers[Managers.INPUTMANAGER.ordinal()] = new InputManager();
 		//Creates collision manager
@@ -175,6 +178,7 @@ public class Engine {
 		while(running)
 		{
 			//Update managers
+			managers[Managers.TIMEMANAGER.ordinal()].update();
 			managers[Managers.INPUTMANAGER.ordinal()].update();
 			//Before objects update, apply global physics
 			managers[Managers.PHYSICSMANAGER.ordinal()].update();

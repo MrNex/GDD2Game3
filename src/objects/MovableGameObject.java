@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import buffer.CollisionBuffer;
 import engine.Engine;
+import engine.Engine.Managers;
 import engine.manager.CollisionManager;
+import engine.manager.TimeManager;
 import mathematics.Vec;
 
 /**
@@ -25,7 +27,7 @@ import mathematics.Vec;
 public class MovableGameObject extends GameObject {
 
 	//Static attributes
-	static private double maxSpeed = 0.005;
+	static private double maxSpeed = 0.05;
 	
 	//Attributes
 	protected Vec previousPosition;
@@ -93,14 +95,26 @@ public class MovableGameObject extends GameObject {
 	 * Zero's net force
 	 */
 	public void forceMove(){
-		velocity.add(Vec.scalarMultiply(netForce, 1.0/mass));
+		//Get acceleration
+		Vec accel = Vec.scalarMultiply(netForce, 1.0 / mass);
+		
+		velocity.add(accel);
+		
+		System.out.println(velocity.toString());
+		
+
+		
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
+		//velocity.scalarMultiply(dt);
+		Vec velInc = Vec.scalarMultiply(velocity, dt);
+		/*
 		if(velocity.getComponent(0) > MovableGameObject.maxSpeed) velocity.setComponent(0, MovableGameObject.maxSpeed);
 		if(velocity.getComponent(0) < -MovableGameObject.maxSpeed) velocity.setComponent(0, -MovableGameObject.maxSpeed);
-
+*/
 		//if(velocity.getComponent(1) > MovableGameObject.maxSpeed) velocity.setComponent(1, MovableGameObject.maxSpeed);
 		//if(velocity.getComponent(1) < -MovableGameObject.maxSpeed) velocity.setComponent(1, -MovableGameObject.maxSpeed);
 
-		move(velocity);
+		move(velInc);
 		netForce.scalarMultiply(0);
 	}
 	
@@ -113,20 +127,30 @@ public class MovableGameObject extends GameObject {
 	 * Note: Net force is not zeroed after this method
 	 * @param axis Axis to move on
 	 */
-	public void specifiedForceMove(int axis){
-		//Increment velocity in the axis by the netforce in axis divided by the mass of the object
-		velocity.incrementComponent(axis, netForce.getComponent(axis) * 1.0 / mass);
+	public void specifiedForceMove(int axis){	
+		double accel = (netForce.getComponent(axis) * (1.0 / mass));
 		
+		//Increment velocity in the axis by the netforce in axis divided by the mass of the object
+		velocity.incrementComponent(axis, accel);
+		
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
+		Vec velInc = Vec.scalarMultiply(velocity,dt);
+		//velocity.scalarMultiply(dt);
 		//If moving in the X axis
+		/*
 		if(axis == 0){
 			//Limit the velocity
 			if(velocity.getComponent(axis) > MovableGameObject.maxSpeed) velocity.setComponent(axis, MovableGameObject.maxSpeed);
 			if(velocity.getComponent(axis) < -MovableGameObject.maxSpeed) velocity.setComponent(axis, -MovableGameObject.maxSpeed);
-		}
+		}*/
+		
+		
+		
+
 		
 		//Move object in axis
 		Vec axisVelocity = new Vec(2);
-		axisVelocity.setComponent(axis, velocity.getComponent(axis));
+		axisVelocity.setComponent(axis, velInc.getComponent(axis));
 		move(axisVelocity);
 	}
 
@@ -198,7 +222,7 @@ public class MovableGameObject extends GameObject {
 			//is no more than the Y velocity of this object
 			//If this is true, the object is on the floor
 			double difference = Math.abs(cBuff.obj2.position.getComponent(1) - (position.getComponent(1) + height));
-			if(difference <= MovableGameObject.maxSpeed){
+			if(difference <= 10){
 				returnBool = true;
 			}
 
@@ -227,7 +251,7 @@ public class MovableGameObject extends GameObject {
 				//is no more than the Y velocity of this object
 				//If this is true, the object is on the floor
 				double difference = Math.abs(cBuff.obj2.position.getComponent(1) - (position.getComponent(1) + height));
-				if(difference <= MovableGameObject.maxSpeed){
+				if(difference <=  MovableGameObject.maxSpeed){
 					isOnFloor = true;
 				}
 			}
@@ -243,7 +267,7 @@ public class MovableGameObject extends GameObject {
 				//is no more than the Y velocity of this object
 				//If this is true, the object is on the floor
 				double difference = Math.abs(cBuff.obj1.position.getComponent(1) - (position.getComponent(1) + height));
-				if(difference <= MovableGameObject.maxSpeed){
+				if(difference <= 10){
 					isOnFloor = true;
 				}
 			}

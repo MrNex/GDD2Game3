@@ -24,7 +24,9 @@ public class PlayerOneState extends ObjectState{
 	private boolean onFloor;
 	private boolean movingRight = false;
 	private boolean movingLeft = false;
-	
+
+
+
 	//Accessors / Modifiers
 	/**
 	 * Gets whether player1 is on the floor
@@ -33,7 +35,7 @@ public class PlayerOneState extends ObjectState{
 	public boolean isOnFloor(){
 		return onFloor;
 	}
-	
+
 	/**
 	 * Sets whether or not player 1 is on the floor
 	 * @param isOnFloor Whether player 1 is on the floor
@@ -41,20 +43,21 @@ public class PlayerOneState extends ObjectState{
 	public void setOnFloor(boolean isOnFloor){
 		onFloor = isOnFloor;
 	}
-	
+
 	/**
 	 * Constructs playerOne's state
 	 */
 	public PlayerOneState() {
 		super();
-		
+
 		//Set movementSpeed
-		acceleration = 0.000001;
+		acceleration = 5;
 		//SEt jump power
-		jumpAcceleration = 0.005;
+		jumpAcceleration = 9000.0;
 		//Set as not on the floor
 		onFloor = true;
-		
+
+
 	}
 
 	/**
@@ -64,7 +67,7 @@ public class PlayerOneState extends ObjectState{
 	public void enter() {
 		attachedTo.setTriggerable(true);
 		attachedTo.addTrigger(new PlayerOneFeetSensoryTrigger(this));
-		
+
 	}
 
 	/**
@@ -75,22 +78,24 @@ public class PlayerOneState extends ObjectState{
 	 */
 	@Override
 	public void update() {
-		
+
 		//Get reference to input manager
 		InputManager input = (InputManager)Engine.currentInstance.getManager(Engine.Managers.INPUTMANAGER);
-		
+
 		//Create a translation vector
 		Vec translationVector = new Vec(2);
-		
+
 		//If up is pressed
 		if(input.isKeyPressed('w')){
 			//If the player is apparently on the floor
 			if(onFloor){
+
 				//Make sure he's on the floor
 				if(((MovableGameObject)attachedTo).checkAllOnFloor()){
 					//And if he is jump, and let him know he's not on the floor
 					translationVector.setComponent(1, -jumpAcceleration);	
 					onFloor = false;
+					System.out.println("Jump");
 				}
 				else
 				{
@@ -98,23 +103,45 @@ public class PlayerOneState extends ObjectState{
 				}
 			}
 		}
-		
+
 		//If left or right is pressed
+		boolean animKillFlag = true;	//Look for any input
 		if(input.isKeyPressed('a')){
-			attachedTo.getSprite().update();
-			attachedTo.getSprite().queueAnimationIfNotQueued(2, true);
+			animKillFlag = false;	//Input found
+
+			if(!attachedTo.getSprite().isPlaying(3)){
+				attachedTo.getSprite().playAnimation(3, true);
+			}
 			translationVector.setComponent(0, -acceleration);
 		}
 		if(input.isKeyPressed('d')){
-			attachedTo.getSprite().update();
-			attachedTo.getSprite().queueAnimationIfNotQueued(0, true);
+			animKillFlag = false;	//Input found
+
+			if(!attachedTo.getSprite().isPlaying(1)){
+				attachedTo.getSprite().playAnimation(1, true);
+			}
+
 			translationVector.setComponent(0, acceleration);
 		}
-		
+
+		//If no input was found
+		if(animKillFlag){
+
+
+			//If the animation was walking right or left and is done playing the walking animation
+			if(attachedTo.getSprite().getCurrentRow() == 3){
+				attachedTo.getSprite().playAnimation(2,false);
+			}
+			else if(attachedTo.getSprite().getCurrentRow() == 1){
+				attachedTo.getSprite().playAnimation(0, false);
+
+			}
+		}
+
 		//((MovableGameObject)attachedTo).move(translationVector);
 		((MovableGameObject)attachedTo).addForce(translationVector);
 		((MovableGameObject)attachedTo).forceMove();
-		
+
 	}
 
 	/**
@@ -123,7 +150,7 @@ public class PlayerOneState extends ObjectState{
 	@Override
 	public void drawEffects(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -132,7 +159,7 @@ public class PlayerOneState extends ObjectState{
 	@Override
 	public void exit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
