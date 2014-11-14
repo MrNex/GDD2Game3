@@ -91,11 +91,9 @@ public class PlayerOneState extends ObjectState{
 					//And if he is jump, and let him know he's not on the floor
 					translationVector.setComponent(1, -jumpAcceleration);	
 					onFloor = false;
-					System.out.println("Jumping");
 				}
 				else
 				{
-					System.out.println("Tested false");
 					onFloor = false;
 				}
 			}

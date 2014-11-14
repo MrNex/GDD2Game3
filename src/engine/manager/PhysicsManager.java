@@ -64,9 +64,7 @@ public class PhysicsManager extends Manager {
 	 * @param collidedWith Object which was collided with
 	 * @param cBuff Information regarding collision
 	 */
-	public void resolveCollision(MovableGameObject mObj, GameObject collidedWith, CollisionBuffer cBuff){
-		//System.out.println("Resolving");
-		
+	public void resolveCollision(MovableGameObject mObj, GameObject collidedWith, CollisionBuffer cBuff){		
 		//Determine collision axis
 		int axis;
 		//If collision was in X Axis

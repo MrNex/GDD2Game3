@@ -200,7 +200,6 @@ public class Sprite {
 			//Finally, once frame variables are ready, set the frame
 			setFrame();
 			
-			System.out.println(currentColumn);		
 		}
 		
 	}

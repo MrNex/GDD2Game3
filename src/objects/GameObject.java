@@ -223,7 +223,6 @@ public class GameObject {
 		}
 		catch(EmptyStackException e){
 			returnState = null;
-			//System.out.println("No state to get from object.");
 		}
 		
 		return returnState;

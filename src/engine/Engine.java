@@ -157,7 +157,6 @@ public class Engine {
 	 */
 	public void start()
 	{		
-		System.out.println("Engine started");
 		//Set running to true
 		running = true;
 		//Begin drawloop
