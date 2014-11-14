@@ -22,16 +22,25 @@ public class FallingObstacleState extends ObjectState{
 	
 	//needed for adding the objects to the teststate
 	private TestState theState;
+	private boolean mouseCheck;
+	private int spawnLimit; //only let player2 spawn this many blocks
+	private int currentSpawn;
 	
 	public FallingObstacleState(){
 		super();
 		theState = null; // :)
+		mouseCheck = false;
+		spawnLimit = 9;
+		currentSpawn = 0;
 	}
 	
 	//this constructor can be used for a faster state hookup than using the setter below
 	public FallingObstacleState(TestState ourState)
 	{
 		theState = ourState;
+		mouseCheck = false;
+		spawnLimit = 9;
+		currentSpawn = 0;
 	}
 	
 	//we need to be able to add falling block to the state
@@ -52,7 +61,7 @@ public class FallingObstacleState extends ObjectState{
 		InputManager input = (InputManager)Engine.currentInstance.getManager(Engine.Managers.INPUTMANAGER);
 		
 		//might be a bit too fast
-		if(input.isMouseButtonPressed(1))
+		if(input.isMouseButtonPressed(1) && mouseCheck == false && currentSpawn < spawnLimit)
 		{
 			//System.out.println("CLICKED!");
 			
@@ -63,8 +72,18 @@ public class FallingObstacleState extends ObjectState{
 			fallingBlock.pushState(new ClickableBlockState());
 			fallingBlock.setTriggerable(true);
 			fallingBlock.addTrigger(new KillOnCollideTrigger());
+			fallingBlock.addForce(new Vec(0.0,0.05));
 			theState.addObj(fallingBlock);
 			
+			currentSpawn++;
+			//System.out.println(currentSpawn);
+			
+			mouseCheck = true;
+			
+		}
+		else if(!(input.isMouseButtonPressed(1)))
+		{
+			mouseCheck = false;
 		}
 	}
 
