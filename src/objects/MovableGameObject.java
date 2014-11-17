@@ -32,16 +32,21 @@ public class MovableGameObject extends GameObject {
 	//Attributes
 	protected Vec previousPosition;
 	protected Vec netForce;
-	protected Vec velocity;
+	protected Vec calculatedVelocity;
+	protected Vec actualVelocity;
 	protected double mass;
 	
 	//Accessors / Modifiers
 	/**
-	 * Gets this object's velocity vector
+	 * Gets this object's velocity vector independent of time passed since last frame
 	 * @return the vector containing the velocity of this object
 	 */
-	public Vec getVelocity(){
-		return velocity;
+	public Vec getCalculatedVelocity(){
+		return calculatedVelocity;
+	}
+	
+	public Vec getActualVelocity(){
+		return actualVelocity;
 	}
 	
 	/**
@@ -75,7 +80,10 @@ public class MovableGameObject extends GameObject {
 		previousPosition = new Vec(2);
 		
 		netForce = new Vec(2);
-		velocity = new Vec(2);
+		
+		calculatedVelocity = new Vec(2);
+		actualVelocity = new Vec(2);
+		
 		mass = m;
 	}
 	
@@ -98,15 +106,15 @@ public class MovableGameObject extends GameObject {
 		//Get acceleration
 		Vec accel = Vec.scalarMultiply(netForce, 1.0 / mass);
 		
-		velocity.add(accel);
+		calculatedVelocity.add(accel);
 		
-		System.out.println(velocity.toString());
+		//System.out.println(velocity.toString());
 		
 
 		
 		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
 		//velocity.scalarMultiply(dt);
-		Vec velInc = Vec.scalarMultiply(velocity, dt);
+		actualVelocity = Vec.scalarMultiply(calculatedVelocity, dt);
 		/*
 		if(velocity.getComponent(0) > MovableGameObject.maxSpeed) velocity.setComponent(0, MovableGameObject.maxSpeed);
 		if(velocity.getComponent(0) < -MovableGameObject.maxSpeed) velocity.setComponent(0, -MovableGameObject.maxSpeed);
@@ -114,7 +122,7 @@ public class MovableGameObject extends GameObject {
 		//if(velocity.getComponent(1) > MovableGameObject.maxSpeed) velocity.setComponent(1, MovableGameObject.maxSpeed);
 		//if(velocity.getComponent(1) < -MovableGameObject.maxSpeed) velocity.setComponent(1, -MovableGameObject.maxSpeed);
 
-		move(velInc);
+		move(actualVelocity);
 		netForce.scalarMultiply(0);
 	}
 	
@@ -131,10 +139,11 @@ public class MovableGameObject extends GameObject {
 		double accel = (netForce.getComponent(axis) * (1.0 / mass));
 		
 		//Increment velocity in the axis by the netforce in axis divided by the mass of the object
-		velocity.incrementComponent(axis, accel);
+		calculatedVelocity.incrementComponent(axis, accel);
+		
 		
 		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
-		Vec velInc = Vec.scalarMultiply(velocity,dt);
+		actualVelocity = Vec.scalarMultiply(calculatedVelocity,dt);
 		//velocity.scalarMultiply(dt);
 		//If moving in the X axis
 		/*
@@ -150,7 +159,7 @@ public class MovableGameObject extends GameObject {
 		
 		//Move object in axis
 		Vec axisVelocity = new Vec(2);
-		axisVelocity.setComponent(axis, velInc.getComponent(axis));
+		axisVelocity.setComponent(axis, actualVelocity.getComponent(axis));
 		move(axisVelocity);
 	}
 
@@ -202,7 +211,7 @@ public class MovableGameObject extends GameObject {
 		
 		//Save current velocity and position
 		Vec savedVelocity = new Vec(2);
-		savedVelocity.copy(velocity);
+		savedVelocity.copy(calculatedVelocity);
 		
 		//Move player in Y Axis
 		specifiedForceMove(1);
@@ -229,7 +238,7 @@ public class MovableGameObject extends GameObject {
 		}
 		
 		//Revert object to saved velocity and position
-		velocity.copy(savedVelocity);
+		calculatedVelocity.copy(savedVelocity);
 		position.copy(previousPosition);
 		
 		//If no collisions with the floor are found, return false

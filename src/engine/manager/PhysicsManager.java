@@ -53,7 +53,7 @@ public class PhysicsManager extends Manager {
 	public void applyGlobalForces(MovableGameObject mObj){
 		mObj.addForce(Vec.scalarMultiply(gravity, mObj.getMass()));
 		Vec friction = new Vec(2);
-		friction.setComponent(0, -mObj.getVelocity().getComponent(0));
+		friction.setComponent(0, -mObj.getCalculatedVelocity().getComponent(0));
 		friction.scalarMultiply(0.01);
 		mObj.addForce(friction);
 
@@ -82,7 +82,7 @@ public class PhysicsManager extends Manager {
 		}
 		
 		//Zero axis velocity
-		mObj.getVelocity().setComponent(axis, 0);
+		mObj.getCalculatedVelocity().setComponent(axis, 0);
 		//Revert movable object on axis
 		mObj.revertAxis(axis);
 		
