@@ -11,6 +11,7 @@ import engine.manager.ContentManager;
 import mathematics.Vec;
 import objects.GameObject;
 import objects.MovableGameObject;
+import sprites.Sprite;
 import state.object.ClickableBlockState;
 import state.object.PlayerOneState;
 import state.object.FallingObstacleState;
@@ -260,7 +261,7 @@ public class TestState extends EngineState {
 	*/	
 		//Create player
 		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 10);
-		player1.setSprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange"));
+		player1.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange")));
 		//player1.setShape(new Rectangle2D.Double(), Color.blue);
 		player1.setVisible(true);
 		
