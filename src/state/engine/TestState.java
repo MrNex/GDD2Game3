@@ -281,7 +281,7 @@ public class TestState extends EngineState {
 		addObj(player2);
 		
 		
-		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0), 0.00001);
+		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0), 20);
 		fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
 		fallingBlock.setVisible(true);
 		fallingBlock.pushState(new ClickableBlockState());

@@ -30,7 +30,7 @@ public class PhysicsManager extends Manager {
 	 */
 	@Override
 	public void init() {
-		gravity = new Vec(0.0, 0.15);
+		gravity = new Vec(0.0, 0.04);
 	}
 
 	/**
@@ -51,10 +51,10 @@ public class PhysicsManager extends Manager {
 	 * @param mObj Object to apply global forces to
 	 */
 	public void applyGlobalForces(MovableGameObject mObj){
-		mObj.addForce(Vec.scalarMultiply(gravity, mObj.getMass()));
+		mObj.addForce(Vec.scalarMultiply(gravity, 1));
 		Vec friction = new Vec(2);
 		friction.setComponent(0, -mObj.getCalculatedVelocity().getComponent(0));
-		friction.scalarMultiply(0.01);
+		friction.scalarMultiply(0.1);
 		mObj.addForce(friction);
 
 	}

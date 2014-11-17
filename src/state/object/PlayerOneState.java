@@ -51,9 +51,9 @@ public class PlayerOneState extends ObjectState{
 		super();
 
 		//Set movementSpeed
-		acceleration = 5;
+		acceleration = 0.1;
 		//SEt jump power
-		jumpAcceleration = 9000.0;
+		jumpAcceleration = 5.0;
 		//Set as not on the floor
 		onFloor = true;
 
@@ -83,8 +83,9 @@ public class PlayerOneState extends ObjectState{
 		InputManager input = (InputManager)Engine.currentInstance.getManager(Engine.Managers.INPUTMANAGER);
 
 		//Create a translation vector
-		Vec translationVector = new Vec(2);
-
+		Vec forceVector = new Vec(2);
+		Vec impulseVector = new Vec(2);
+		
 		//If up is pressed
 		if(input.isKeyPressed('w')){
 			//If the player is apparently on the floor
@@ -93,8 +94,8 @@ public class PlayerOneState extends ObjectState{
 				//Make sure he's on the floor
 				if(((MovableGameObject)attachedTo).checkAllOnFloor()){
 					//And if he is jump, and let him know he's not on the floor
-					translationVector.setComponent(1, -jumpAcceleration);	
-					onFloor = false;
+					impulseVector.setComponent(1, -jumpAcceleration);	
+					//onFloor = false;
 					System.out.println("Jump");
 				}
 				else
@@ -115,7 +116,7 @@ public class PlayerOneState extends ObjectState{
 			else if (!onFloor) {
 				attachedTo.getSprite().playAnimation(5, true);
 			}
-			translationVector.setComponent(0, -acceleration);
+			forceVector.setComponent(0, -acceleration);
 		}
 		if(input.isKeyPressed('d')){
 			animKillFlag = false;	//Input found
@@ -127,7 +128,7 @@ public class PlayerOneState extends ObjectState{
 				attachedTo.getSprite().playAnimation(4, true);
 			}
 
-			translationVector.setComponent(0, acceleration);
+			forceVector.setComponent(0, acceleration);
 		}
 
 		//If no input was found
@@ -153,7 +154,9 @@ public class PlayerOneState extends ObjectState{
 		}
 
 		//((MovableGameObject)attachedTo).move(translationVector);
-		((MovableGameObject)attachedTo).addForce(translationVector);
+		((MovableGameObject)attachedTo).addForce(forceVector);
+		((MovableGameObject)attachedTo).addImpulse(impulseVector);
+
 		((MovableGameObject)attachedTo).forceMove();
 
 	}

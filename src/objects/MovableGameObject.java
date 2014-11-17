@@ -28,14 +28,15 @@ public class MovableGameObject extends GameObject {
 
 	//Static attributes
 	static private double maxSpeed = 0.05;
-	
+
 	//Attributes
 	protected Vec previousPosition;
 	protected Vec netForce;
 	protected Vec calculatedVelocity;
 	protected Vec actualVelocity;
+	protected Vec netImpulse;
 	protected double mass;
-	
+
 	//Accessors / Modifiers
 	/**
 	 * Gets this object's velocity vector independent of time passed since last frame
@@ -44,11 +45,11 @@ public class MovableGameObject extends GameObject {
 	public Vec getCalculatedVelocity(){
 		return calculatedVelocity;
 	}
-	
+
 	public Vec getActualVelocity(){
 		return actualVelocity;
 	}
-	
+
 	/**
 	 * Gets the net force of this object
 	 * @return The vector containing the net force of this object
@@ -56,7 +57,7 @@ public class MovableGameObject extends GameObject {
 	public Vec getNetForce(){
 		return netForce;
 	}
-	
+
 	/**
 	 * Gets the mass of this object
 	 * @return The mass of this object
@@ -78,23 +79,31 @@ public class MovableGameObject extends GameObject {
 	public MovableGameObject(double xx, double yy, double w, double h, Vec fwd, double m) {
 		super(xx, yy, w, h, fwd);
 		previousPosition = new Vec(2);
-		
+
 		netForce = new Vec(2);
-		
+		netImpulse = new Vec(2);
+
 		calculatedVelocity = new Vec(2);
 		actualVelocity = new Vec(2);
-		
+
 		mass = m;
 	}
-	
+
 	/**
 	 * Adds a force to the movable game object's net force
 	 * @param forceInc Force to increment net force by
+	 * @param isImpulse should this force be scaled by dt?
 	 */
 	public void addForce(Vec forceInc){
+		//double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getAvgNanoSecondsPassed());
+		//netForce.add(Vec.scalarMultiply(forceInc, dt/1000000.0));
 		netForce.add(forceInc);
 	}
 	
+	public void addImpulse(Vec impulse){
+		netImpulse.add(impulse);
+	}
+
 	/**
 	 * Converts the netForce to acceleration
 	 * Adds the acceleration to velocity
@@ -104,28 +113,34 @@ public class MovableGameObject extends GameObject {
 	 */
 	public void forceMove(){
 		//Get acceleration
-		Vec accel = Vec.scalarMultiply(netForce, 1.0 / mass);
+		Vec accel = Vec.scalarMultiply(netForce, 1.0/mass);
+
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getAvgNanoSecondsPassed());
+
+		dt /= 1000000.0;
 		
-		calculatedVelocity.add(accel);
-		
+		//Vec actualAccel = Vec.scalarMultiply(accel, dt);
+
+		Vec actualAccel = Vec.scalarMultiply(accel, dt);
+
+
+		actualAccel.add(Vec.scalarMultiply(netImpulse, 1.0/mass));
+
+		//actualVelocity.scalarMultiply(dt);
 		//System.out.println(velocity.toString());
-		
 
-		
-		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
-		//velocity.scalarMultiply(dt);
-		actualVelocity = Vec.scalarMultiply(calculatedVelocity, dt);
-		/*
-		if(velocity.getComponent(0) > MovableGameObject.maxSpeed) velocity.setComponent(0, MovableGameObject.maxSpeed);
-		if(velocity.getComponent(0) < -MovableGameObject.maxSpeed) velocity.setComponent(0, -MovableGameObject.maxSpeed);
-*/
-		//if(velocity.getComponent(1) > MovableGameObject.maxSpeed) velocity.setComponent(1, MovableGameObject.maxSpeed);
-		//if(velocity.getComponent(1) < -MovableGameObject.maxSpeed) velocity.setComponent(1, -MovableGameObject.maxSpeed);
 
-		move(actualVelocity);
+
+		//move(actualVelocity);
+		previousPosition.copy(position);
+		
+		position.add(Vec.scalarMultiply(Vec.add(calculatedVelocity, Vec.scalarMultiply(actualAccel, 0.5)), dt));
+		calculatedVelocity.add(actualAccel);
+		calculatedVelocity.add(Vec.scalarMultiply(netImpulse, 1.0/mass));
 		netForce.scalarMultiply(0);
+		netImpulse.scalarMultiply(0);
 	}
-	
+
 	/**
 	 * Moves the movable game object based on the net force in a specific axis
 	 * Converts net force in axis to acceleration
@@ -136,14 +151,25 @@ public class MovableGameObject extends GameObject {
 	 * @param axis Axis to move on
 	 */
 	public void specifiedForceMove(int axis){	
-		double accel = (netForce.getComponent(axis) * (1.0 / mass));
+		double accel = (netForce.getComponent(axis)  / mass);
+		System.out.println("Specified move");
+
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getNanoSecondsSinceLastUpdate());
+
+		dt /= 1000000.0;
 		
+		//double actualAccel = accel * dt;
+
+
+
 		//Increment velocity in the axis by the netforce in axis divided by the mass of the object
-		calculatedVelocity.incrementComponent(axis, accel);
-		
-		
-		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getMicroSecondsSinceLastUpdate()) / 1000000.0;
-		actualVelocity = Vec.scalarMultiply(calculatedVelocity,dt);
+		calculatedVelocity.incrementComponent(axis, accel * dt);
+		calculatedVelocity.incrementComponent(axis, netImpulse.getComponent(axis) / mass);
+
+		actualVelocity.copy(calculatedVelocity);
+
+
+		//actualVelocity.incrementComponent(axis, actualAccel);
 		//velocity.scalarMultiply(dt);
 		//If moving in the X axis
 		/*
@@ -152,11 +178,11 @@ public class MovableGameObject extends GameObject {
 			if(velocity.getComponent(axis) > MovableGameObject.maxSpeed) velocity.setComponent(axis, MovableGameObject.maxSpeed);
 			if(velocity.getComponent(axis) < -MovableGameObject.maxSpeed) velocity.setComponent(axis, -MovableGameObject.maxSpeed);
 		}*/
-		
-		
-		
 
-		
+
+
+
+
 		//Move object in axis
 		Vec axisVelocity = new Vec(2);
 		axisVelocity.setComponent(axis, actualVelocity.getComponent(axis));
@@ -182,7 +208,7 @@ public class MovableGameObject extends GameObject {
 		position.copy(previousPosition);
 		updateShape();
 	}
-	
+
 	/**
 	 * Reverts the position back to the previousPosition on a given axis
 	 * Updates the object's shape
@@ -190,17 +216,17 @@ public class MovableGameObject extends GameObject {
 	 */
 	public void revertAxis(int axis){
 		position.setComponent(axis, previousPosition.getComponent(axis));
-		
+
 		updateShape();
 	}
-	
+
 	/**
 	 * Sets the previousosition to the currentPosition
 	 */
 	public void refresh(){
 		previousPosition.copy(position);
 	}
-	
+
 	/**
 	 * Queries the collision manager for any collisions,
 	 * And checks if any of the returned collisions is occurring on the floor
@@ -208,17 +234,17 @@ public class MovableGameObject extends GameObject {
 	 */
 	public boolean checkAllOnFloor(){
 		boolean returnBool = false;
-		
+
 		//Save current velocity and position
 		Vec savedVelocity = new Vec(2);
 		savedVelocity.copy(calculatedVelocity);
-		
+
 		//Move player in Y Axis
 		specifiedForceMove(1);
-		
+
 		//Get list of collision buffers from collision manager
 		ArrayList<CollisionBuffer> cBuffs = ((CollisionManager)Engine.currentInstance.getManager(Engine.Managers.COLLISIONMANAGER)).getCollisionsOnObject(this);
-		
+
 		//Loop through registered collisions to check if any are with a floor
 		for(CollisionBuffer cBuff : cBuffs){
 			//Make sure the collision occurred on the Y Axis
@@ -226,7 +252,7 @@ public class MovableGameObject extends GameObject {
 			if(cBuff.obj2CollidedSide.getComponent(1) != 0){
 				continue;				
 			}
-			
+
 			//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
 			//is no more than the Y velocity of this object
 			//If this is true, the object is on the floor
@@ -236,26 +262,26 @@ public class MovableGameObject extends GameObject {
 			}
 
 		}
-		
+
 		//Revert object to saved velocity and position
 		calculatedVelocity.copy(savedVelocity);
 		position.copy(previousPosition);
-		
+
 		//If no collisions with the floor are found, return false
 		return returnBool;
-		
+
 	}
-	
+
 	public boolean checkOnFloor(CollisionBuffer cBuff){
-		
+
 		boolean isOnFloor = false;
-		
+
 		if(cBuff.obj1 == this){
 			if(cBuff.obj2.isSolid()){
 				//Make sure the collision occurred on the Y Axis
 				//If not, skip checking this object
 				if(cBuff.obj2CollidedSide.getComponent(1) != 0) return false;
-				
+
 				//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
 				//is no more than the Y velocity of this object
 				//If this is true, the object is on the floor
@@ -271,7 +297,7 @@ public class MovableGameObject extends GameObject {
 				//Make sure the collision occurred on the Y Axis
 				//If not, skip checking this object
 				if(cBuff.obj1CollidedSide.getComponent(1) != 0) return false;
-				
+
 				//Once found a collision on Y axis, check if the abs(colliding object's Y position - (this objects Y position + this object's height)) 
 				//is no more than the Y velocity of this object
 				//If this is true, the object is on the floor
@@ -283,7 +309,7 @@ public class MovableGameObject extends GameObject {
 
 		}
 
-		
+
 		return isOnFloor;
 	}
 
