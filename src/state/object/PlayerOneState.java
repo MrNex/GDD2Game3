@@ -109,16 +109,22 @@ public class PlayerOneState extends ObjectState{
 		if(input.isKeyPressed('a')){
 			animKillFlag = false;	//Input found
 
-			if(!attachedTo.getSprite().isPlaying(3)){
+			if(!attachedTo.getSprite().isPlaying(3) && onFloor){
 				attachedTo.getSprite().playAnimation(3, true);
+			}
+			else if (!onFloor) {
+				attachedTo.getSprite().playAnimation(5, true);
 			}
 			translationVector.setComponent(0, -acceleration);
 		}
 		if(input.isKeyPressed('d')){
 			animKillFlag = false;	//Input found
 
-			if(!attachedTo.getSprite().isPlaying(1)){
+			if(!attachedTo.getSprite().isPlaying(1) && onFloor){
 				attachedTo.getSprite().playAnimation(1, true);
+			}
+			else if (!onFloor) {
+				attachedTo.getSprite().playAnimation(4, true);
 			}
 
 			translationVector.setComponent(0, acceleration);
@@ -134,8 +140,16 @@ public class PlayerOneState extends ObjectState{
 			}
 			else if(attachedTo.getSprite().getCurrentRow() == 1){
 				attachedTo.getSprite().playAnimation(0, false);
-
 			}
+			
+			//If the sprite was jumping, but is now on the floor and not moving
+			else if(attachedTo.getSprite().getCurrentRow() == 4 && onFloor) {
+				attachedTo.getSprite().playAnimation(0, false);
+			}
+			else if(attachedTo.getSprite().getCurrentRow() == 5 && onFloor) {
+				attachedTo.getSprite().playAnimation(2, false);
+			}
+			
 		}
 
 		//((MovableGameObject)attachedTo).move(translationVector);
