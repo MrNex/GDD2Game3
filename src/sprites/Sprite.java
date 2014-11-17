@@ -78,6 +78,28 @@ public class Sprite {
 	}
 	
 	/**
+	 * 
+	 * @param sprite
+	 */
+	public Sprite(Sprite sprite)
+	{
+		this.spriteSheet = sprite.spriteSheet;
+		
+		this.numRows = sprite.numRows;
+		this.numColumns = sprite.numColumns;
+		
+		this.frameWidth = sprite.frameWidth;
+		this.frameHeight = sprite.frameHeight;
+		
+		this.currentRow = 0;
+		this.currentColumn = 0;
+		
+		repeating = false;
+		animationQueue = new LinkedList<AnimationInstruction>();
+		setFrame();
+	}
+	
+	/**
 	 * Sets the position of the frame based on the current
 	 * Row and column of spritesheet being drawn
 	 */
