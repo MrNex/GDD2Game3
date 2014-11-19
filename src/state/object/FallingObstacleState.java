@@ -7,11 +7,13 @@ import java.awt.geom.Rectangle2D;
 import mathematics.Vec;
 import objects.GameObject;
 import objects.MovableGameObject;
+import sprites.Sprite;
 import state.engine.TestState;
 import triggers.KillOnCollideTrigger;
 import engine.Engine;
 import engine.Engine.Managers;
 import engine.manager.CameraManager;
+import engine.manager.ContentManager;
 import engine.manager.InputManager;
 import engine.manager.ScreenManager;
 
@@ -59,7 +61,7 @@ public class FallingObstacleState extends ObjectState{
 					100,
 					new Vec(1.0,0.0),
 					20);
-			fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
+			fallingBlock.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("block")));
 			fallingBlock.setVisible(true);
 			fallingBlock.pushState(new ClickableBlockState());
 			fallingBlock.setTriggerable(true);
