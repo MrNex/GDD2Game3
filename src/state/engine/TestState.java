@@ -76,7 +76,7 @@ public class TestState extends EngineState {
 		jumpBlock.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock.setVisible(true);
 		jumpBlock.setTriggerable(true);
-		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-18000)));
+		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-1000)));
 		
 		addObj(jumpBlock);
 		
@@ -121,7 +121,7 @@ public class TestState extends EngineState {
 		pushBlock.setVisible(true);
 		pushBlock.setSolid(false);
 		pushBlock.setTriggerable(true);
-		pushBlock.addTrigger(new AddForceTrigger(new Vec(-0.0000008,0.0)));
+		pushBlock.addTrigger(new AddForceTrigger(new Vec(-0.08,0.0)));
 		
 		addObj(pushBlock);
 		
@@ -147,7 +147,7 @@ public class TestState extends EngineState {
 		jumpBlock2.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock2.setVisible(true);
 		jumpBlock2.setTriggerable(true);
-		jumpBlock2.addTrigger(new AddForceTrigger(new Vec(0.0,-10000)));
+		jumpBlock2.addTrigger(new AddForceTrigger(new Vec(0.0,-800)));
 		
 		addObj(jumpBlock2);
 		
@@ -174,7 +174,7 @@ public class TestState extends EngineState {
 		jumpBlock3.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock3.setVisible(true);
 		jumpBlock3.setTriggerable(true);
-		jumpBlock3.addTrigger(new AddForceTrigger(new Vec(0.0,-1000)));
+		jumpBlock3.addTrigger(new AddForceTrigger(new Vec(0.0,-800)));
 		
 		addObj(jumpBlock3);
 		
@@ -189,7 +189,7 @@ public class TestState extends EngineState {
 		hangBlock.setVisible(true);
 		hangBlock.setSolid(false);
 		hangBlock.setTriggerable(true);
-		hangBlock.addTrigger(new AddForceTrigger(new Vec(0.0,0.00000008)));
+		hangBlock.addTrigger(new AddForceTrigger(new Vec(0.0,0.03)));
 		
 		addObj(hangBlock);
 		
