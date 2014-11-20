@@ -3,13 +3,14 @@ package state.object;
 import java.awt.Graphics2D;
 
 import objects.GameObject;
+import state.State;
 
 /**
  * Object state defines a state within {@link objects.GameObject}'s finite state machine
  * @author Nex
  *
  */
-public abstract class ObjectState {
+public abstract class ObjectState extends State{
 
 	protected GameObject attachedTo;
 
@@ -22,10 +23,11 @@ public abstract class ObjectState {
 		attachedTo = attachTo;
 	}
 
-	/**
-	 * Will be called on attaching a gameobject to this state.
-	 */
-	abstract public void enter();
+
+	@Override
+	public void enter(){
+		
+	}
 
 	/**
 	 * Updates this state. All state logic is done here.

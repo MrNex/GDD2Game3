@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import objects.GameObject;
+import state.engine.EngineState;
 import engine.Engine;
 import engine.Engine.Managers;
 
@@ -55,7 +56,37 @@ public class ScreenManager extends Manager{
 	public JPanel getPanel(){
 		return drawPanel;
 	}
+	
+	
+	/**
+	 * Gets the graphics renderer of drawPanel
+	 * @return An instance of the graphics renderer in drawPanel.
+	 */
+	public Graphics getGraphics(){
+		return drawPanel.getGraphics();
+	}
 
+	
+	/**
+	 * Gets a percentage of the width of the screen
+	 * @param percent The percent you want
+	 * @return The specified percentage of the screenWidth
+	 */
+	public double getPercentageWidth(double percent)
+	{
+		return width / 100.0 * percent;
+	}
+
+	/**
+	 * Gets a percentage of the height of the screen
+	 * @param percent The percent of the height that you want
+	 * @return The specified percentage of the screenHeight
+	 */
+	public double getPercentageHeight(double percent)
+	{
+		return height / 100.0 * percent;
+	}
+	
 	/**
 	 * Initializes all member variables of ScreenManager.
 	 * Sets width and height of viewport,
@@ -74,6 +105,7 @@ public class ScreenManager extends Manager{
 		//Create the window
 		window = new JFrame("Blank Engine");
 		window.setSize(width, height);
+		window.setResizable(false);
 
 		//Create the panel
 		drawPanel = new JPanel(){
@@ -84,28 +116,37 @@ public class ScreenManager extends Manager{
 			@Override
 			public void paintComponent(Graphics g){
 				super.paintComponent(g);
-				//TODO: Change refreshing to real time
 				//Refresh screen
-				//super.setBackground(null);
 				g.setColor(backgroundColor);
 				g.fillRect(0, 0, width, height);
-
-				//Cast to graphics2d
-				Graphics2D g2d = (Graphics2D)g;
-
-				//Construct camera coordinate system
-				CameraManager cam = (CameraManager)Engine.currentInstance.getManager(Managers.CAMERAMANAGER);
-				cam.constructCameraCoordinateSystem(g2d);
-
-				ArrayList<GameObject> drawList = Engine.currentInstance.getCurrentState().getObjList();
-
-				//For every game object in objects
-				for(GameObject obj : drawList){
-					obj.draw(g2d);
-				}
 				
-				//Destruct camera coordinate system
-				cam.destructCameraCoordinateSystem(g2d);
+				//If the engine is running
+				if(Engine.currentInstance.isRunning()){
+					//Cast to graphics2d
+					Graphics2D g2d = (Graphics2D)g;
+
+					//Construct camera coordinate system
+					CameraManager cam = (CameraManager)Engine.currentInstance.getManager(Managers.CAMERAMANAGER);
+					cam.constructCameraCoordinateSystem(g2d);
+
+					//If there is a current state of the engine
+					EngineState currentState = Engine.currentInstance.getCurrentState();
+					if(currentState != null)
+					{
+						ArrayList<GameObject> drawList = currentState.getObjList();
+
+						//For every game object in objects
+						for(GameObject obj : drawList){
+							obj.draw(g2d);
+						}
+					}
+
+					
+					//Destruct camera coordinate system
+					cam.destructCameraCoordinateSystem(g2d);
+				}
+
+
 			}
 		};
 

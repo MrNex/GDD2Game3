@@ -12,6 +12,8 @@ import objects.GameObject;
 import engine.manager.*;
 import state.*;
 import state.engine.*;
+import state.engine.menus.MainMenuState;
+import state.engine.menus.MenuEngineState;
 
 
 
@@ -39,7 +41,6 @@ public class Engine {
 	}
 
 	//Attributes
-	private boolean running;
 	private Stack<EngineState> stateStack;
 	private Manager[] managers;
 	private Timer drawTimer;
@@ -52,6 +53,17 @@ public class Engine {
 	 */
 	public void pushState(EngineState newState){
 		stateStack.push(newState);
+		if(newState != null){
+			newState.enter();
+		}
+	}
+	
+	/**
+	 * 1 <--> stateStack.peek() != null
+	 * @return true if the current state is non null
+	 */
+	public boolean isRunning(){
+		return getCurrentState() != null;
 	}
 	
 	/**
@@ -60,10 +72,17 @@ public class Engine {
 	public void popState(){
 		try{
 			stateStack.pop();
+			if(stateStack.size() > 0){
+				if(stateStack.peek() != null){
+					stateStack.peek().enter();
+				}
+				
+			}
 		}
 		catch(EmptyStackException e){
 			System.out.println("No state to pop from engine state stack.");
 		}
+		
 	}
 	
 	/**
@@ -100,10 +119,6 @@ public class Engine {
 		//Set this as current instance of engine
 		currentInstance = this;
 
-		//Set internal variables
-		running = false;
-
-
 		
 		
 		//Create managers
@@ -123,16 +138,18 @@ public class Engine {
 		managers[Managers.CAMERAMANAGER.ordinal()] = new CameraManager();
 		//Creates the Sprite Manager
 		managers[Managers.SPRITEMANAGER.ordinal()] = new SpriteManager();
-
+		//Creates the screen manager, hooking up input manager to the game window.
+		managers[Managers.SCREENMANAGER.ordinal()] = new ScreenManager();
 		
 		
 		//Initialize state stack
 		stateStack = new Stack<EngineState>();
 		//Create the current state
-		pushState(new TestState());
+		pushState(new MainMenuState());
 		
-		//Creates the screen manager, hooking up input manager to the game window.
-		managers[Managers.SCREENMANAGER.ordinal()] = new ScreenManager();
+
+		
+		
 
 		
 		//Create objects!
@@ -161,7 +178,6 @@ public class Engine {
 	public void start()
 	{		
 		//Set running to true
-		running = true;
 		//Begin drawloop
 		drawTimer.start();
 		//Run
@@ -175,7 +191,7 @@ public class Engine {
 	 */
 	private void run()
 	{
-		while(running)
+		while(isRunning())
 		{
 			//Update managers
 			managers[Managers.TIMEMANAGER.ordinal()].update();

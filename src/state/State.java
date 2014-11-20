@@ -23,6 +23,10 @@ public abstract class State {
 	 */
 	protected abstract void init();
 	
+	/**
+	 * Will be called when this state is entered
+	 */
+	abstract public void enter();
 
 	/**
 	 * Updates this state

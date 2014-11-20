@@ -38,6 +38,7 @@ public class FallingObstacleState extends ObjectState{
 	}
 	
 
+	@Override
 	public void enter(){
 	
 	}
@@ -88,6 +89,13 @@ public class FallingObstacleState extends ObjectState{
 
 	@Override
 	public void exit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void init() {
 		// TODO Auto-generated method stub
 		
 	}

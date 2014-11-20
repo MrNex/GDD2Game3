@@ -1,6 +1,7 @@
 package state.engine;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import engine.Engine;
@@ -8,6 +9,7 @@ import engine.Engine.Managers;
 import engine.manager.CameraManager;
 import engine.manager.InputManager;
 import engine.manager.ContentManager;
+import engine.manager.ScreenManager;
 import mathematics.Vec;
 import objects.GameObject;
 import objects.MovableGameObject;
@@ -291,6 +293,25 @@ public class TestState extends EngineState {
 
 		
 		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).setFollow(player1);
+	}
+
+	@Override
+	public void enter() {
+		//Get reference to screenManager to get screen dimensions
+		ScreenManager screen = (ScreenManager)Engine.currentInstance.getManager(Managers.SCREENMANAGER);
+		//Get reference to camera manager
+		CameraManager cm = ((CameraManager)Engine.currentInstance.getManager(Managers.CAMERAMANAGER));
+
+		//Add half of screen dimensions to translationVec
+		//Get the screen dimensions
+		Vec screenDimensions = new Vec(2);
+		screenDimensions.setComponent(0, screen.getWindow().getWidth());
+		screenDimensions.setComponent(1, screen.getWindow().getHeight());
+		//Scale by 1/2
+		screenDimensions.scalarMultiply(0.5);
+		
+		cm.setOffset(screenDimensions);
+		
 	}
 
 }

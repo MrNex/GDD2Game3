@@ -17,6 +17,7 @@ public class ClickableBlockState extends ObjectState{
 		super();
 	}
 	
+	@Override
 	public void enter(){
 	
 	}
@@ -35,6 +36,12 @@ public class ClickableBlockState extends ObjectState{
 
 	@Override
 	public void exit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void init() {
 		// TODO Auto-generated method stub
 		
 	}

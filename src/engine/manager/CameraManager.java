@@ -3,6 +3,7 @@ package engine.manager;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+import objects.GameObject;
 import objects.MovableGameObject;
 import engine.Engine;
 import engine.Engine.Managers;
@@ -17,7 +18,8 @@ public class CameraManager extends Manager {
 
 	//Attributes
 	private Vec position;
-	private MovableGameObject follow;
+	private Vec offset;
+	private GameObject follow;
 	private AffineTransform savedSystem;
 
 	//Accessors / modifiers
@@ -30,10 +32,24 @@ public class CameraManager extends Manager {
 	}
 	
 	/**
+	 * Gets the offset vector for the camera
+	 * @return Offset vector indicating offset from position vector for actual camera position
+	 */
+	public Vec getOffset(){
+		return offset;
+	}
+	
+	public void setOffset(Vec newOffset){
+		offset = newOffset;
+	}
+	
+	
+	
+	/**
 	 * Gets the gameobject the camera is currently following.
 	 * @return The vector the camera is currently snapping to
 	 */
-	public MovableGameObject getFollow(){
+	public GameObject getFollow(){
 		return follow;
 	}
 	
@@ -43,7 +59,7 @@ public class CameraManager extends Manager {
 	 * Will automatically get its position and snap to every update cycle.
 	 * @param toFollow
 	 */
-	public void setFollow(MovableGameObject toFollow){
+	public void setFollow(GameObject toFollow){
 		follow = toFollow;
 	}
 	
@@ -63,6 +79,9 @@ public class CameraManager extends Manager {
 		//Initialize camera at 0, 0
 		position = new Vec(2);
 		
+		//initialize offset
+		offset = new Vec(2);
+		
 		//set follow vector to explicit null
 		follow = null;
 	}
@@ -72,6 +91,8 @@ public class CameraManager extends Manager {
 	 */
 	@Override
 	public void update() {
+		System.out.println(position);
+
 		if(follow != null){
 			snapTo(follow.getPos());
 		}
@@ -97,19 +118,10 @@ public class CameraManager extends Manager {
 		
 		//Set translationVec to the negative of camera's position
 		Vec translationVec = Vec.scalarMultiply(position, -1);
-		
-		//Get reference to screenManager to get screen dimensions
-		ScreenManager screen = (ScreenManager)Engine.currentInstance.getManager(Managers.SCREENMANAGER);
-		
-		//Add half of screen dimensions to translationVec
-		//Get the screen dimensions
-		Vec screenDimensions = new Vec(2);
-		screenDimensions.setComponent(0, screen.getWindow().getWidth());
-		screenDimensions.setComponent(1, screen.getWindow().getHeight());
-		//Scale by 1/2
-		screenDimensions.scalarMultiply(0.5);
+
 		//Add
-		translationVec.add(screenDimensions);
+		translationVec.add(offset);
+		//translationVec.add(screenDimensions);
 		
 		//Create affine transform
 		transform.translate(translationVec.getComponent(0), translationVec.getComponent(1));

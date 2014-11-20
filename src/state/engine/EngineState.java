@@ -11,7 +11,7 @@ import objects.*;
  * @author Nex
  *
  */
-public class EngineState extends State {
+public abstract class EngineState extends State {
 
 	//Attributes
 	protected ArrayList<GameObject> objects;			//Current list of objs in gameState

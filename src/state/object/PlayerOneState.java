@@ -179,4 +179,10 @@ public class PlayerOneState extends ObjectState{
 
 	}
 
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
