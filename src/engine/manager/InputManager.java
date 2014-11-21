@@ -197,17 +197,27 @@ public class InputManager extends Manager implements KeyListener, MouseListener{
 	 * @return A vector containing the mouse positionin window space
 	 */
 	private Vec getUpdatedMousePosition(){
-		//Get the mouse's screen position
-		Point globalMousePos = MouseInfo.getPointerInfo().getLocation();
 		//Retrieve reference to screen manager
 		ScreenManager ref = (ScreenManager)Engine.currentInstance.getManager(Engine.Managers.SCREENMANAGER);
-		//Retrieve windows position
-		Point windowPos = ref.getWindow().getLocation();
+		//Get the mouse's screen position
+		//Point globalMousePos = MouseInfo.getPointerInfo().getLocation();
+		Point globalMousePos = ref.getPanel().getMousePosition();
+		
 		
 		//Create a vector for the mouse position
 		Vec relMousePos = new Vec(2);
-		relMousePos.setComponent(0, globalMousePos.x - windowPos.x);
-		relMousePos.setComponent(1, globalMousePos.y - windowPos.y);
+		
+		if(globalMousePos != null)
+		{
+			relMousePos.setComponent(0, globalMousePos.x/* - windowPos.x*/);
+			relMousePos.setComponent(1, globalMousePos.y/* - windowPos.y*/);
+		}
+		else
+		{
+			relMousePos.copy(previousMousePosition);
+		}
+		
+		
 		
 		return relMousePos;
 	}
