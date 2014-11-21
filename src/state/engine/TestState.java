@@ -81,7 +81,7 @@ public class TestState extends EngineState {
 		jumpBlock.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock.setVisible(true);
 		jumpBlock.setTriggerable(true);
-		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-1000)));
+		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-800)));
 		
 		addObj(jumpBlock);
 		
@@ -198,17 +198,72 @@ public class TestState extends EngineState {
 		
 		addObj(hangBlock);
 		
-		GameObject floor10 = new GameObject(4500, 550, 600, 100, new Vec(1.0, 0.0));
+		GameObject floor10 = new GameObject(4500, 550, 1600, 100, new Vec(1.0, 0.0));
 		floor10.setShape(new Rectangle2D.Double(), walkBlock);
 		floor10.setVisible(true);
 		
 		addObj(floor10);
 		
-		GameObject step5 = new GameObject(5000, 250, 100, 300, new Vec(1.0, 0.0));
+		GameObject step5 = new GameObject(6100, 150, 100, 500, new Vec(1.0, 0.0));
 		step5.setShape(new Rectangle2D.Double(), walkBlock);
 		step5.setVisible(true);
 		
 		addObj(step5);
+		
+		//Ceilling
+		GameObject roof1 = new GameObject(-100, 350, 1000, 100, new Vec(1.0, 0.0));
+		roof1.setShape(new Rectangle2D.Double(), walkBlock);
+		roof1.setVisible(true);
+		
+		addObj(roof1);
+		
+		GameObject roof2 = new GameObject(900, -150, 100, 600, new Vec(1.0, 0.0));
+		roof2.setShape(new Rectangle2D.Double(), walkBlock);
+		roof2.setVisible(true);
+		
+		addObj(roof2);
+		
+		GameObject roof3 = new GameObject(1300, 350, 200, 100, new Vec(1.0, 0.0));
+		roof3.setShape(new Rectangle2D.Double(), walkBlock);
+		roof3.setVisible(true);
+		
+		addObj(roof3);
+		
+		GameObject roof4 = new GameObject(900, -250, 1000, 100, new Vec(1.0, 0.0));
+		roof4.setShape(new Rectangle2D.Double(), walkBlock);
+		roof4.setVisible(true);
+		
+		addObj(roof4);
+		
+		GameObject roof5 = new GameObject(1800, -150, 100, 600, new Vec(1.0, 0.0));
+		roof5.setShape(new Rectangle2D.Double(), walkBlock);
+		roof5.setVisible(true);
+		
+		addObj(roof5);
+		
+		GameObject roof6 = new GameObject(1900, 350, 900, 100, new Vec(1.0, 0.0));
+		roof6.setShape(new Rectangle2D.Double(), walkBlock);
+		roof6.setVisible(true);
+		
+		addObj(roof6);
+		
+		GameObject roof7 = new GameObject(3800, 450, 200, 100, new Vec(1.0, 0.0));
+		roof7.setShape(new Rectangle2D.Double(), walkBlock);
+		roof7.setVisible(true);
+		
+		addObj(roof7);
+		
+		GameObject roof8 = new GameObject(3900, -250, 100, 700, new Vec(1.0, 0.0));
+		roof8.setShape(new Rectangle2D.Double(), walkBlock);
+		roof8.setVisible(true);
+		
+		addObj(roof8);
+		
+		GameObject roof9 = new GameObject(4000, -250, 15000, 100, new Vec(1.0, 0.0));
+		roof9.setShape(new Rectangle2D.Double(), walkBlock);
+		roof9.setVisible(true);
+		
+		addObj(roof9);
 		
 	/*	GameObject step2 = new GameObject(700, 550, 100, 200, new Vec(1.0, 0.0));
 		step2.setShape(new Rectangle2D.Double(), Color.black);
