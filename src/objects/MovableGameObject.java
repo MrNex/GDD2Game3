@@ -152,7 +152,6 @@ public class MovableGameObject extends GameObject {
 	 */
 	public void specifiedForceMove(int axis){	
 		double accel = (netForce.getComponent(axis)  / mass);
-		System.out.println("Specified move");
 
 		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getNanoSecondsSinceLastUpdate());
 

@@ -91,8 +91,6 @@ public class CameraManager extends Manager {
 	 */
 	@Override
 	public void update() {
-		System.out.println(position);
-
 		if(follow != null){
 			snapTo(follow.getPos());
 		}

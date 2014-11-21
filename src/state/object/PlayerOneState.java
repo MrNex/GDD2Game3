@@ -95,8 +95,6 @@ public class PlayerOneState extends ObjectState{
 				if(((MovableGameObject)attachedTo).checkAllOnFloor()){
 					//And if he is jump, and let him know he's not on the floor
 					impulseVector.setComponent(1, -jumpAcceleration);	
-					//onFloor = false;
-					System.out.println("Jump");
 				}
 				else
 				{
