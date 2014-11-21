@@ -229,11 +229,11 @@ public class TestState extends EngineState {
 		
 		addObj(roof3);
 		
-		GameObject roof4 = new GameObject(900, -250, 1000, 100, new Vec(1.0, 0.0));
-		roof4.setShape(new Rectangle2D.Double(), walkBlock);
-		roof4.setVisible(true);
+		//GameObject roof4 = new GameObject(900, -250, 1000, 100, new Vec(1.0, 0.0));
+		//roof4.setShape(new Rectangle2D.Double(), walkBlock);
+		//roof4.setVisible(true);
 		
-		addObj(roof4);
+		//addObj(roof4);
 		
 		GameObject roof5 = new GameObject(1800, -150, 100, 600, new Vec(1.0, 0.0));
 		roof5.setShape(new Rectangle2D.Double(), walkBlock);
@@ -259,11 +259,11 @@ public class TestState extends EngineState {
 		
 		addObj(roof8);
 		
-		GameObject roof9 = new GameObject(4000, -250, 15000, 100, new Vec(1.0, 0.0));
-		roof9.setShape(new Rectangle2D.Double(), walkBlock);
-		roof9.setVisible(true);
+	//	GameObject roof9 = new GameObject(4000, -250, 15000, 100, new Vec(1.0, 0.0));
+	//	roof9.setShape(new Rectangle2D.Double(), walkBlock);
+	//	roof9.setVisible(true);
 		
-		addObj(roof9);
+	//	addObj(roof9);
 		
 	/*	GameObject step2 = new GameObject(700, 550, 100, 200, new Vec(1.0, 0.0));
 		step2.setShape(new Rectangle2D.Double(), Color.black);
