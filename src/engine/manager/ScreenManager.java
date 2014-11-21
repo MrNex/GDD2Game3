@@ -100,7 +100,7 @@ public class ScreenManager extends Manager{
 		height = 750;
 		
 		//SEt background color
-		backgroundColor = Color.red;
+		backgroundColor = new Color(23,29,48);
 
 		//Create the window
 		window = new JFrame("Blank Engine");
