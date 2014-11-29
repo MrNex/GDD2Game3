@@ -27,11 +27,12 @@ import mathematics.Vec;
 public class MovableGameObject extends GameObject {
 
 	//Static attributes
-	static private double maxSpeed = 0.05;
+	static private double maxSpeed = 1.5;
 
 	//Attributes
 	protected Vec previousPosition;
 	protected Vec netForce;
+	protected Vec collisionImpulse;
 	protected Vec calculatedVelocity;
 	protected Vec actualVelocity;
 	protected Vec netImpulse;
@@ -56,6 +57,26 @@ public class MovableGameObject extends GameObject {
 	 */
 	public Vec getNetForce(){
 		return netForce;
+	}
+
+	public Vec getNetImpulse(){
+		return netImpulse;
+	}
+
+	/**
+	 * Gets the impulse due to collison applied on this object previous update
+	 * @return the collison impulse
+	 */
+	public Vec getCollisionImpulse(){
+		return collisionImpulse;
+	}
+
+	/**
+	 * Sets the impulse due to collision to be applied next update
+	 * @param impulse new collision impulse
+	 */
+	public void setCollisionImpulse(Vec impulse){
+		collisionImpulse = impulse;
 	}
 
 	/**
@@ -86,6 +107,8 @@ public class MovableGameObject extends GameObject {
 		calculatedVelocity = new Vec(2);
 		actualVelocity = new Vec(2);
 
+		collisionImpulse = new Vec(2);
+
 		mass = m;
 	}
 
@@ -99,7 +122,7 @@ public class MovableGameObject extends GameObject {
 		//netForce.add(Vec.scalarMultiply(forceInc, dt/1000000.0));
 		netForce.add(forceInc);
 	}
-	
+
 	public void addImpulse(Vec impulse){
 		netImpulse.add(impulse);
 	}
@@ -118,7 +141,7 @@ public class MovableGameObject extends GameObject {
 		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getAvgNanoSecondsPassed());
 
 		dt /= 1000000.0;
-		
+
 		//Vec actualAccel = Vec.scalarMultiply(accel, dt);
 
 		Vec actualAccel = Vec.scalarMultiply(accel, dt);
@@ -133,12 +156,29 @@ public class MovableGameObject extends GameObject {
 
 		//move(actualVelocity);
 		previousPosition.copy(position);
-		
+
 		position.add(Vec.scalarMultiply(Vec.add(calculatedVelocity, Vec.scalarMultiply(actualAccel, 0.5)), dt));
 		calculatedVelocity.add(actualAccel);
 		calculatedVelocity.add(Vec.scalarMultiply(netImpulse, 1.0/mass));
-		netForce.scalarMultiply(0);
-		netImpulse.scalarMultiply(0);
+
+		//If the X velocity is really small but non zero, make it zero
+		if(Math.abs(calculatedVelocity.getComponent(0)) < 0.001){
+			calculatedVelocity.setComponent(0, 0);
+		}
+
+		//If the magnitude of the velocity in the X direction is greater than the max speed
+		if(Math.abs(calculatedVelocity.getComponent(0)) > MovableGameObject.maxSpeed){
+			System.out.println("Maxing");
+			if(calculatedVelocity.getComponent(0) < 0){
+				calculatedVelocity.setComponent(0, -MovableGameObject.maxSpeed);
+			}
+			else{
+				calculatedVelocity.setComponent(0, MovableGameObject.maxSpeed);
+
+			}
+		}
+		//netForce.scalarMultiply(0);
+		//netImpulse.scalarMultiply(0);
 	}
 
 	/**
@@ -156,7 +196,7 @@ public class MovableGameObject extends GameObject {
 		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getNanoSecondsSinceLastUpdate());
 
 		dt /= 1000000.0;
-		
+
 		//double actualAccel = accel * dt;
 
 

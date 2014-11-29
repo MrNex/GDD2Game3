@@ -61,7 +61,7 @@ public class FallingObstacleState extends ObjectState{
 					100,
 					100,
 					new Vec(1.0,0.0),
-					20);
+					1.0);
 			fallingBlock.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("block")));
 			fallingBlock.setVisible(true);
 			fallingBlock.pushState(new ClickableBlockState());

@@ -23,7 +23,11 @@ public class AddForceTrigger extends Trigger{
 	public void action(GameObject triggeredBy, CollisionBuffer cBuff) {
 		// TODO Auto-generated method stub
 		if(triggeredBy instanceof MovableGameObject){
-			((MovableGameObject) triggeredBy).addForce(force);
+			System.out.println("Adding: " + force.toString());
+			//((MovableGameObject) triggeredBy).addForce(force);
+			Vec collisionForce = new Vec(2);
+			collisionForce.copy(force);
+			((MovableGameObject) triggeredBy).setCollisionImpulse(collisionForce);
 		}
 	}
 

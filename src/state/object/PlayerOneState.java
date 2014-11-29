@@ -51,7 +51,7 @@ public class PlayerOneState extends ObjectState{
 		super();
 
 		//Set movementSpeed
-		acceleration = 0.1;
+		acceleration = 0.15;
 		//SEt jump power
 		jumpAcceleration = 5.0;
 		//Set as not on the floor
