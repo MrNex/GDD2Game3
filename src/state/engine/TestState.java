@@ -76,7 +76,7 @@ public class TestState extends EngineState {
 		addObj(startBumperBottom);
 		
 		//Create a floor
-		GameObject floor = new GameObject(0, 750, 2100, 100, new Vec(1.0, 0.0));
+		GameObject floor = new GameObject(0, 750, 2200, 100, new Vec(1.0, 0.0));
 		floor.setShape(new Rectangle2D.Double(), walkBlock);
 		floor.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
 		floor.setVisible(true);
@@ -84,7 +84,7 @@ public class TestState extends EngineState {
 		floorLeft.setShape(new Rectangle2D.Double(), walkBlock);
 		floorLeft.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
 		floorLeft.setVisible(true);
-		GameObject floorRight = new GameObject(2100, 750, 100, 100, new Vec(1.0, 0.0));
+		GameObject floorRight = new GameObject(2200, 750, 100, 100, new Vec(1.0, 0.0));
 		floorRight.setShape(new Rectangle2D.Double(), walkBlock);
 		floorRight.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
 		floorRight.setVisible(true);
@@ -93,25 +93,53 @@ public class TestState extends EngineState {
 		addObj(floorLeft);
 		addObj(floorRight);
 		
-		GameObject box = new GameObject(2100, 850, 100, 300, new Vec(1.0, 0.0));
+		GameObject box = new GameObject(2200, 950, 100, 100, new Vec(1.0, 0.0));
 		box.setShape(new Rectangle2D.Double(), walkBlock);
+		box.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
 		box.setVisible(true);
+		GameObject boxTop = new GameObject(2200, 850, 100, 100, new Vec(1.0, 0.0));
+		boxTop.setShape(new Rectangle2D.Double(), walkBlock);
+		boxTop.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		boxTop.setVisible(true);
+		GameObject boxBottom = new GameObject(2200, 1050, 100, 100, new Vec(1.0, 0.0));
+		boxBottom.setShape(new Rectangle2D.Double(), walkBlock);
+		boxBottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		boxBottom.setVisible(true);
 		
 		addObj(box);
+		addObj(boxTop);
+		addObj(boxBottom);
 		
-		GameObject jumpBlock = new GameObject(2200,1050,300,100,new Vec(1.0,0.0));
+		GameObject box2 = new GameObject(2300, 1150, 200, 100, new Vec(1.0, 0.0));
+		box2.setShape(new Rectangle2D.Double(), walkBlock);
+		box2.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		box2.setVisible(true);
+		GameObject box2Left = new GameObject(2200, 1150, 100, 100, new Vec(1.0, 0.0));
+		box2Left.setShape(new Rectangle2D.Double(), walkBlock);
+		box2Left.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		box2Left.setVisible(true);
+		GameObject box2Right = new GameObject(2500, 1150, 100, 100, new Vec(1.0, 0.0));
+		box2Right.setShape(new Rectangle2D.Double(), walkBlock);
+		box2Right.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		box2Right.setVisible(true);
+		
+		addObj(box2);
+		addObj(box2Left);
+		addObj(box2Right);
+		
+		GameObject box3 = new GameObject(2500, 850, 100, 200, new Vec(1.0, 0.0));
+		box3.setShape(new Rectangle2D.Double(), walkBlock);
+		box3.setVisible(true);
+		
+		addObj(box3);
+		
+		GameObject jumpBlock = new GameObject(2300,1050,200,100,new Vec(1.0,0.0));
 		jumpBlock.setShape(new Rectangle2D.Double(),Color.green);
 		jumpBlock.setVisible(true);
 		jumpBlock.setTriggerable(true);
 		jumpBlock.addTrigger(new AddForceTrigger(new Vec(0.0,-800)));
 		
 		addObj(jumpBlock);
-		
-		GameObject box3 = new GameObject(2500, 850, 100, 300, new Vec(1.0, 0.0));
-		box3.setShape(new Rectangle2D.Double(), walkBlock);
-		box3.setVisible(true);
-		
-		addObj(box3);
 		
 		GameObject floor2 = new GameObject(2500, 750, 300, 100, new Vec(1.0, 0.0));
 		floor2.setShape(new Rectangle2D.Double(), walkBlock);
