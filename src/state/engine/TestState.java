@@ -58,18 +58,40 @@ public class TestState extends EngineState {
 	private void createTestLevel(){
 		walkBlock = new Color(64,64,64);
 		
-		GameObject startBumper = new GameObject(-100, 450, 100, 400, new Vec(1.0, 0.0));
+		GameObject startBumper = new GameObject(-100, 550, 100, 100, new Vec(1.0, 0.0));
 		startBumper.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumper.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
 		startBumper.setVisible(true);
+		GameObject startBumperTop = new GameObject(-100, 450, 100, 100, new Vec(1.0, 0.0));
+		startBumperTop.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumperTop.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		startBumperTop.setVisible(true);
+		GameObject startBumperBottom = new GameObject(-100, 650, 100, 100, new Vec(1.0, 0.0));
+		startBumperBottom.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumperBottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		startBumperBottom.setVisible(true);
 		
 		addObj(startBumper);
+		addObj(startBumperTop);
+		addObj(startBumperBottom);
 		
 		//Create a floor
-		GameObject floor = new GameObject(0, 750, 2200, 100, new Vec(1.0, 0.0));
+		GameObject floor = new GameObject(0, 750, 2100, 100, new Vec(1.0, 0.0));
 		floor.setShape(new Rectangle2D.Double(), walkBlock);
+		floor.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
 		floor.setVisible(true);
+		GameObject floorLeft = new GameObject(-100, 750, 100, 100, new Vec(1.0, 0.0));
+		floorLeft.setShape(new Rectangle2D.Double(), walkBlock);
+		floorLeft.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		floorLeft.setVisible(true);
+		GameObject floorRight = new GameObject(2100, 750, 100, 100, new Vec(1.0, 0.0));
+		floorRight.setShape(new Rectangle2D.Double(), walkBlock);
+		floorRight.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		floorRight.setVisible(true);
 		
 		addObj(floor);
+		addObj(floorLeft);
+		addObj(floorRight);
 		
 		GameObject box = new GameObject(2100, 850, 100, 300, new Vec(1.0, 0.0));
 		box.setShape(new Rectangle2D.Double(), walkBlock);
@@ -99,18 +121,21 @@ public class TestState extends EngineState {
 		
 		GameObject floor3 = new GameObject(2800, 850, 100, 100, new Vec(1.0, 0.0));
 		floor3.setShape(new Rectangle2D.Double(), walkBlock);
+		floor3.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		floor3.setVisible(true);
 		
 		addObj(floor3);
 		
 		GameObject floor4 = new GameObject(2900, 950, 100, 100, new Vec(1.0, 0.0));
 		floor4.setShape(new Rectangle2D.Double(), walkBlock);
+		floor4.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		floor4.setVisible(true);
 		
 		addObj(floor4);
 		
 		GameObject floor5 = new GameObject(3000, 1050, 100, 100, new Vec(1.0, 0.0));
 		floor5.setShape(new Rectangle2D.Double(), walkBlock);
+		floor5.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		floor5.setVisible(true);
 		
 		addObj(floor5);
@@ -132,12 +157,14 @@ public class TestState extends EngineState {
 		
 		GameObject floor7 = new GameObject(3600, 1050, 100, 100, new Vec(1.0, 0.0));
 		floor7.setShape(new Rectangle2D.Double(), walkBlock);
+		floor7.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		floor7.setVisible(true);
 		
 		addObj(floor7);
 		
 		GameObject floor8 = new GameObject(3700, 950, 100, 100, new Vec(1.0, 0.0));
 		floor8.setShape(new Rectangle2D.Double(), walkBlock);
+		floor8.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		floor8.setVisible(true);
 		
 		addObj(floor8);
@@ -171,6 +198,7 @@ public class TestState extends EngineState {
 		
 		GameObject step3 = new GameObject(4400, 850, 100, 100, new Vec(1.0, 0.0));
 		step3.setShape(new Rectangle2D.Double(), walkBlock);
+		step3.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
 		step3.setVisible(true);
 		
 		addObj(step3);
