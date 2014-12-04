@@ -56,6 +56,108 @@ public class TestState extends EngineState {
 	}
 	
 	private void createTestLevel(){
+		levelOne();
+		
+		//Create player
+		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 5);
+		player1.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange")));
+		//player1.setShape(new Rectangle2D.Double(), Color.blue);
+		player1.setVisible(true);
+		
+		player1.getSprite().queueAnimation(0, true);
+		
+		player1.pushState(new PlayerOneState());
+		
+		addObj(player1);
+		
+		
+		//Make the second player...invisible ;)
+		GameObject player2 = new GameObject(0,0,10,10, new Vec(1.0, 0.0));
+		player2.setVisible(false);
+		FallingObstacleState fallingObstacleState = new FallingObstacleState(); //allows the player to drop obstacles
+		player2.pushState(fallingObstacleState);
+		player2.setTriggerable(true);
+		addObj(player2);
+		
+		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).setFollow(player1);
+	}
+
+	void levelOne(){
+		walkBlock = new Color(64,64,64);
+		
+		GameObject startBumper = new GameObject(-100, 150, 100, 500, new Vec(1.0, 0.0));
+		startBumper.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumper.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		startBumper.setVisible(true);
+		GameObject startBumperTop = new GameObject(-100, 50, 100, 100, new Vec(1.0, 0.0));
+		startBumperTop.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumperTop.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		startBumperTop.setVisible(true);
+		GameObject startBumperBottom = new GameObject(-100, 650, 100, 100, new Vec(1.0, 0.0));
+		startBumperBottom.setShape(new Rectangle2D.Double(), walkBlock);
+		startBumperBottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		startBumperBottom.setVisible(true);
+		
+		addObj(startBumper);
+		addObj(startBumperTop);
+		addObj(startBumperBottom);
+		
+		
+		//floor block
+		GameObject floor = new GameObject(0, 750, 3500, 100, new Vec(1.0, 0.0));
+		floor.setShape(new Rectangle2D.Double(), walkBlock);
+		floor.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		floor.setVisible(true);
+		GameObject floorLeft = new GameObject(-100, 750, 100, 100, new Vec(1.0, 0.0));
+		floorLeft.setShape(new Rectangle2D.Double(), walkBlock);
+		floorLeft.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		floorLeft.setVisible(true);
+		GameObject floorRight = new GameObject(3500, 750, 100, 100, new Vec(1.0, 0.0));
+		floorRight.setShape(new Rectangle2D.Double(), walkBlock);
+		floorRight.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		floorRight.setVisible(true);
+		
+		addObj(floor);
+		addObj(floorLeft);
+		addObj(floorRight);
+		
+		//pillar blocks
+		GameObject pillar1 = new GameObject(2200, 550, 100, 100, new Vec(1.0, 0.0));
+		pillar1.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar1.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar1.setVisible(true);
+		GameObject pillar1Top = new GameObject(2200, 450, 100, 100, new Vec(1.0, 0.0));
+		pillar1Top.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar1Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar1Top.setVisible(true);
+		GameObject pillar1Bottom = new GameObject(2200, 650, 100, 100, new Vec(1.0, 0.0));
+		pillar1Bottom.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar1Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar1Bottom.setVisible(true);
+		
+		addObj(pillar1);
+		addObj(pillar1Top);
+		addObj(pillar1Bottom);
+		
+		GameObject pillar2 = new GameObject(3500, 350, 100, 300, new Vec(1.0, 0.0));
+		pillar2.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar2.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar2.setVisible(true);
+		GameObject pillar2Top = new GameObject(3500, 250, 100, 100, new Vec(1.0, 0.0));
+		pillar2Top.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar2Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar2Top.setVisible(true);
+		GameObject pillar2Bottom = new GameObject(3500, 650, 100, 100, new Vec(1.0, 0.0));
+		pillar2Bottom.setShape(new Rectangle2D.Double(), walkBlock);
+		pillar2Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar2Bottom.setVisible(true);
+		
+		addObj(pillar2);
+		addObj(pillar2Top);
+		addObj(pillar2Bottom);
+	}
+	
+	void testLevel(){
 		walkBlock = new Color(64,64,64);
 		
 		GameObject startBumper = new GameObject(-100, 550, 100, 100, new Vec(1.0, 0.0));
@@ -375,40 +477,8 @@ public class TestState extends EngineState {
 		
 		addObj(jumpBlock2);
 	*/	
-		//Create player
-		MovableGameObject player1 = new MovableGameObject(0, 550, 40, 66, new Vec(1.0, 0.0), 5);
-		player1.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("prisonerOrange")));
-		//player1.setShape(new Rectangle2D.Double(), Color.blue);
-		player1.setVisible(true);
-		
-		player1.getSprite().queueAnimation(0, true);
-		
-		player1.pushState(new PlayerOneState());
-		
-		addObj(player1);
-		
-		
-		//Make the second player...invisible ;)
-		GameObject player2 = new GameObject(0,0,10,10, new Vec(1.0, 0.0));
-		player2.setVisible(false);
-		FallingObstacleState fallingObstacleState = new FallingObstacleState(); //allows the player to drop obstacles
-		player2.pushState(fallingObstacleState);
-		player2.setTriggerable(true);
-		addObj(player2);
-		
-		
-		MovableGameObject fallingBlock = new MovableGameObject(100,-300,100,100,new Vec(1.0,0.0), 20);
-		fallingBlock.setShape(new Rectangle2D.Double(),Color.blue);
-		fallingBlock.setVisible(true);
-		fallingBlock.pushState(new ClickableBlockState());
-		fallingBlock.setTriggerable(true);
-		fallingBlock.addTrigger(new KillOnCollideTrigger());
-		addObj(fallingBlock);
-
-		
-		((CameraManager)Engine.currentInstance.getManager(Engine.Managers.CAMERAMANAGER)).setFollow(player1);
 	}
-
+	
 	@Override
 	public void enter() {
 		//Get reference to screenManager to get screen dimensions
