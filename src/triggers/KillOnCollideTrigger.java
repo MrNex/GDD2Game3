@@ -47,7 +47,6 @@ public class KillOnCollideTrigger extends Trigger{
 				}
 		}
 		attachedTo.removeTrigger(this);
-		attachedTo.setColor(Color.black);
 	}
 
 }
