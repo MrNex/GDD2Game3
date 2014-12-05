@@ -260,7 +260,7 @@ public class MovableGameObject extends GameObject {
 		
 		//Multiply by mass to get force needed to push block back to previous position
 		a.scalarMultiply(mass);
-		
+		a.scalarMultiply(mass);
 		this.addForce(a);
 		
 		position.copy(previousPosition);
@@ -288,7 +288,7 @@ public class MovableGameObject extends GameObject {
 		//Divide velocity by change in time to get acceleration
 		double a = v/dt;
 		//Multiply acceleration by mass to get force needed to push object back to previous position
-		a *= mass;
+		a *= mass * mass;
 		
 		//Create resultant force
 		Vec rForce = new Vec(2);
