@@ -168,7 +168,7 @@ public class MovableGameObject extends GameObject {
 
 		//If the magnitude of the velocity in the X direction is greater than the max speed
 		if(Math.abs(calculatedVelocity.getComponent(0)) > MovableGameObject.maxSpeed){
-			System.out.println("Maxing");
+			//System.out.println("Maxing");
 			if(calculatedVelocity.getComponent(0) < 0){
 				calculatedVelocity.setComponent(0, -MovableGameObject.maxSpeed);
 			}
@@ -244,7 +244,28 @@ public class MovableGameObject extends GameObject {
 	 * And makes call to updateShape
 	 */
 	public void revert(){
+		//Get difference in positions
+		Vec dx = Vec.subtract(previousPosition, position);
+		
+		//Divide this by the time last update loop
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getNanoSecondsSinceLastUpdate());
+		//Convert to ms
+		dt /= 1000000.0;
+		
+		//Divide dx by dt to get v
+		Vec v = Vec.scalarMultiply(dx, 1.0/dt);
+		
+		//Divide v by t to get a
+		Vec a = Vec.scalarMultiply(v, 1/dt);
+		
+		//Multiply by mass to get force needed to push block back to previous position
+		a.scalarMultiply(mass);
+		
+		this.addForce(a);
+		
 		position.copy(previousPosition);
+		
+		
 		updateShape();
 	}
 
@@ -254,8 +275,28 @@ public class MovableGameObject extends GameObject {
 	 * @param axis The axis to revert
 	 */
 	public void revertAxis(int axis){
+		//Get difference in positions on axis
+		double dx = previousPosition.getComponent(axis) - position.getComponent(axis);
+		
+		//Divide by time last update loop
+		double dt = ((double)((TimeManager)Engine.currentInstance.getManager(Managers.TIMEMANAGER)).getNanoSecondsSinceLastUpdate());
+		//Convert to ms
+		dt /= 1000000.0;
+		
+		//Divide change in position by change in time for velocity
+		double v = dx/dt;
+		//Divide velocity by change in time to get acceleration
+		double a = v/dt;
+		//Multiply acceleration by mass to get force needed to push object back to previous position
+		a *= mass;
+		
+		//Create resultant force
+		Vec rForce = new Vec(2);
+		rForce.setComponent(axis, a);
+		
+		this.addForce(rForce);
+		
 		position.setComponent(axis, previousPosition.getComponent(axis));
-
 		updateShape();
 	}
 
