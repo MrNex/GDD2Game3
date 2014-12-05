@@ -5,9 +5,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
 import objects.GameObject;
+import sprites.Sprite;
 import state.object.buttons.StartGameButtonState;
 import engine.Engine;
 import engine.Engine.Managers;
+import engine.manager.ContentManager;
 import engine.manager.ScreenManager;
 import mathematics.Vec;
 
@@ -26,6 +28,13 @@ public class MainMenuState extends MenuEngineState{
 		
 		//Get refrence to screen manager
 				ScreenManager sm = ((ScreenManager)Engine.currentInstance.getManager(Managers.SCREENMANAGER));
+		
+		//Add Background Image		
+		GameObject backgroundPic = new GameObject(0,0,sm.getPercentageWidth(100),
+									sm.getPercentageHeight(100),new Vec(1.0f,0.0f));
+		//backgroundPic.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("MenuPageClosed")));
+		backgroundPic.setVisible(true);
+		addObj(backgroundPic);
 		
 		//Add start button
 		GameObject startButton = new GameObject(
