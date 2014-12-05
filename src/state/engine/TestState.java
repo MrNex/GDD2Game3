@@ -87,6 +87,21 @@ public class TestState extends EngineState {
 	void levelOne(){
 		Color guidenceBlock = new Color(128,128,128,64);
 		
+		//ceiling
+		GameObject ceiling = new GameObject(0, -750, 81000, 100, new Vec(1.0, 0.0));
+		ceiling.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		ceiling.setVisible(true);
+		GameObject ceilingLeft = new GameObject(-100, -750, 100, 100, new Vec(1.0, 0.0));
+		ceilingLeft.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		ceilingLeft.setVisible(true);
+		GameObject ceilingRight = new GameObject(8100,-750, 100, 100, new Vec(1.0, 0.0));
+		ceilingRight.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		ceilingRight.setVisible(true);
+		
+		addObj(ceiling);
+		addObj(ceilingLeft);
+		addObj(ceilingRight);
+		
 		GameObject startBumper = new GameObject(-100, -550, 100, 1200, new Vec(1.0, 0.0));
 		startBumper.setShape(new Rectangle2D.Double(), walkBlock);
 		startBumper.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
@@ -204,19 +219,33 @@ public class TestState extends EngineState {
 		addObj(pillar4Bottom);
 		
 		//floor for next section
-		GameObject floor2 = new GameObject(5200, 350, 2000, 100, new Vec(1.0, 0.0));
+		GameObject floor2 = new GameObject(5200, 350, 700, 100, new Vec(1.0, 0.0));
 		floor2.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
 		floor2.setVisible(true);
 		GameObject floor2Left = new GameObject(5100, 350, 100, 100, new Vec(1.0, 0.0));
 		floor2Left.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
 		floor2Left.setVisible(true);
-		GameObject floor2Right = new GameObject(7200, 350, 100, 100, new Vec(1.0, 0.0));
+		GameObject floor2Right = new GameObject(5900, 350, 100, 100, new Vec(1.0, 0.0));
 		floor2Right.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
 		floor2Right.setVisible(true);
 		
 		addObj(floor2);
 		addObj(floor2Left);
 		addObj(floor2Right);
+		
+		GameObject pillar5 = new GameObject(6000, -550, 100, 500, new Vec(1.0, 0.0));
+		pillar5.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar5.setVisible(true);
+		GameObject pillar5Top = new GameObject(6000, -650, 100, 100, new Vec(1.0, 0.0));
+		pillar5Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar5Top.setVisible(true);
+		GameObject pillar5Bottom = new GameObject(6000, -50, 100, 100, new Vec(1.0, 0.0));
+		pillar5Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar5Bottom.setVisible(true);
+		
+		addObj(pillar5);
+		addObj(pillar5Top);
+		addObj(pillar5Bottom);
 		
 		//obstacle surrounding pressurePlate
 		GameObject guard = new GameObject(5399, 250, 100, 100, new Vec(1.0, 0.0));
@@ -232,12 +261,12 @@ public class TestState extends EngineState {
 		addObj(guard2);
 		
 		//pressure plate puzzle
-		GameObject removableWall = new GameObject(6000, -650, 100, 1000, new Vec(1.0, 0.0));
-		removableWall.setShape(new Rectangle2D.Double(), new Color(0,0,255));
+		GameObject removableWall = new GameObject(6000, 50, 100, 300, new Vec(1.0, 0.0));
+		removableWall.setShape(new Rectangle2D.Double(), new Color(0,0,200));
 		removableWall.setVisible(true);
-		removableWall.pushState(new DoorState());
+		removableWall.pushState(new DoorState(new Color(0,0,255)));
 		GameObject pressurePlate = new GameObject(5499, 330, 102, 20, new Vec(1.0, 0.0));
-		pressurePlate.setShape(new Rectangle2D.Double(), new Color(0,0,255));
+		pressurePlate.setShape(new Rectangle2D.Double(), new Color(0,0,200,50));
 		pressurePlate.setVisible(true);
 		pressurePlate.setSolid(false);
 		pressurePlate.setTriggerable(true);
@@ -245,6 +274,184 @@ public class TestState extends EngineState {
 		
 		addObj(removableWall);
 		addObj(pressurePlate);
+		
+		
+		//Last Puzzle Area
+		GameObject pillar6 = new GameObject(6000, 350, 100, 600, new Vec(1.0, 0.0));
+		pillar6.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar6.setVisible(true);
+		GameObject pillar6Top = new GameObject(6000, 250, 100, 100, new Vec(1.0, 0.0));
+		pillar6Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar6Top.setVisible(true);
+		GameObject pillar6Bottom = new GameObject(6000, 950, 100, 100, new Vec(1.0, 0.0));
+		pillar6Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar6Bottom.setVisible(true);
+		
+		addObj(pillar6);
+		addObj(pillar6Top);
+		addObj(pillar6Bottom);
+		
+		GameObject pillar7 = new GameObject(6300, -550, 100, 1300, new Vec(1.0, 0.0));
+		pillar7.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar7.setVisible(true);
+		GameObject pillar7Top = new GameObject(6300, -650, 100, 100, new Vec(1.0, 0.0));
+		pillar7Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar7Top.setVisible(true);
+		GameObject pillar7Bottom = new GameObject(6300, 750, 100, 100, new Vec(1.0, 0.0));
+		pillar7Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar7Bottom.setVisible(true);
+		
+		addObj(pillar7);
+		addObj(pillar7Top);
+		addObj(pillar7Bottom);
+		
+		//floor for third section
+		GameObject floor3 = new GameObject(6100, 1050, 2000, 100, new Vec(1.0, 0.0));
+		floor3.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		floor3.setVisible(true);
+		GameObject floor3Left = new GameObject(6000, 1050, 100, 100, new Vec(1.0, 0.0));
+		floor3Left.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		floor3Left.setVisible(true);
+		GameObject floor3Right = new GameObject(8100, 1050, 100, 100, new Vec(1.0, 0.0));
+		floor3Right.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		floor3Right.setVisible(true);
+		
+		addObj(floor3);
+		addObj(floor3Left);
+		addObj(floor3Right);
+		
+		//ledge
+		GameObject ledge = new GameObject(7200, 750, 200, 100, new Vec(1.0, 0.0));
+		ledge.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		ledge.setVisible(true);
+		GameObject ledgeLeft = new GameObject(7100, 750, 100, 100, new Vec(1.0, 0.0));
+		ledgeLeft.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		ledgeLeft.setVisible(true);
+		GameObject ledgeRight = new GameObject(7400, 750, 100, 100, new Vec(1.0, 0.0));
+		ledgeRight.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		ledgeRight.setVisible(true);
+		
+		addObj(ledge);
+		addObj(ledgeLeft);
+		addObj(ledgeRight);
+		
+		GameObject ledgeEnd = new GameObject(7400, 850, 100, 100, new Vec(1.0, 0.0));
+		ledgeEnd.setShape(new Rectangle2D.Double(), walkBlock);
+		ledgeEnd.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		ledgeEnd.setVisible(true);
+		GameObject ledgeEndBottom = new GameObject(7400, 950, 100, 100, new Vec(1.0, 0.0));
+		ledgeEndBottom.setShape(new Rectangle2D.Double(), walkBlock);
+		ledgeEndBottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		ledgeEndBottom.setVisible(true);
+		
+		addObj(ledgeEnd);
+		addObj(ledgeEndBottom);
+		
+		GameObject ledge2 = new GameObject(6500, 650, 100, 100, new Vec(1.0, 0.0));
+		ledge2.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		ledge2.setVisible(true);
+		GameObject ledge2Left = new GameObject(6400, 650, 100, 100, new Vec(1.0, 0.0));
+		ledge2Left.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		ledge2Left.setVisible(true);
+		GameObject ledge2Right = new GameObject(6600, 650, 100, 100, new Vec(1.0, 0.0));
+		ledge2Right.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		ledge2Right.setVisible(true);
+		
+		addObj(ledge2);
+		addObj(ledge2Left);
+		addObj(ledge2Right);
+		
+		GameObject ledge3 = new GameObject(6500, 250, 100, 100, new Vec(1.0, 0.0));
+		ledge3.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorMiddle")));
+		ledge3.setVisible(true);
+		GameObject ledge3Left = new GameObject(6400, 250, 100, 100, new Vec(1.0, 0.0));
+		ledge3Left.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorLeft")));
+		ledge3Left.setVisible(true);
+		GameObject ledge3Right = new GameObject(6600, 250, 100, 100, new Vec(1.0, 0.0));
+		ledge3Right.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floorRight")));
+		ledge3Right.setVisible(true);
+		
+		addObj(ledge3);
+		addObj(ledge3Left);
+		addObj(ledge3Right);
+		
+		GameObject ledgeEnd2Top = new GameObject(6600, 350, 100, 100, new Vec(1.0, 0.0));
+		ledgeEnd2Top.setShape(new Rectangle2D.Double(), walkBlock);
+		ledgeEnd2Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		ledgeEnd2Top.setVisible(true);
+		GameObject ledgeEnd2Bottom = new GameObject(6600, 450, 100, 100, new Vec(1.0, 0.0));
+		ledgeEnd2Bottom.setShape(new Rectangle2D.Double(), walkBlock);
+		ledgeEnd2Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		ledgeEnd2Bottom.setVisible(true);
+		
+		addObj(ledgeEnd2Top);
+		addObj(ledgeEnd2Bottom);
+		
+		GameObject block = new GameObject(6500, 450, 100, 100, new Vec(1.0, 0.0));
+		block.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
+		block.setVisible(true);
+		GameObject block2 = new GameObject(6700, 450, 100, 100, new Vec(1.0, 0.0));
+		block2.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("floor")));
+		block2.setVisible(true);
+		addObj(block);
+		addObj(block2);
+		
+		//pressurePlates
+		GameObject removableWall2 = new GameObject(6400, 750, 700, 100, new Vec(1.0, 0.0));
+		removableWall2.setShape(new Rectangle2D.Double(), new Color(0,180,200));
+		removableWall2.setVisible(true);
+		removableWall2.pushState(new DoorState(new Color(0,180,200)));
+		GameObject pressurePlate2 = new GameObject(7380, 950, 20, 100, new Vec(1.0, 0.0));
+		pressurePlate2.setShape(new Rectangle2D.Double(), new Color(0,180,200,50));
+		pressurePlate2.setVisible(true);
+		pressurePlate2.setSolid(false);
+		pressurePlate2.setTriggerable(true);
+		pressurePlate2.addTrigger(new PressurePlateTrigger(pressurePlate2,removableWall2));
+		
+		addObj(removableWall2);
+		addObj(pressurePlate2);
+		
+		GameObject removableWall3 = new GameObject(6700, 250, 100, 100, new Vec(1.0, 0.0));
+		removableWall3.setShape(new Rectangle2D.Double(), new Color(0,180,0));
+		removableWall3.setVisible(true);
+		removableWall3.pushState(new DoorState(new Color(0,180,0)));
+		GameObject pressurePlate3 = new GameObject(6500, 430, 100, 20, new Vec(1.0, 0.0));
+		pressurePlate3.setShape(new Rectangle2D.Double(), new Color(0,180,0,50));
+		pressurePlate3.setVisible(true);
+		pressurePlate3.setSolid(false);
+		pressurePlate3.setTriggerable(true);
+		pressurePlate3.addTrigger(new PressurePlateTrigger(pressurePlate3,removableWall3));
+		
+		addObj(removableWall3);
+		addObj(pressurePlate3);
+		
+		GameObject removableWall4 = new GameObject(7100, 450, 100, 300, new Vec(1.0, 0.0));
+		removableWall4.setShape(new Rectangle2D.Double(), new Color(180,0,0));
+		removableWall4.setVisible(true);
+		removableWall4.pushState(new DoorState(new Color(180,0,0)));
+		GameObject pressurePlate4 = new GameObject(6700, 430, 100, 20, new Vec(1.0, 0.0));
+		pressurePlate4.setShape(new Rectangle2D.Double(), new Color(180,0,0,50));
+		pressurePlate4.setVisible(true);
+		pressurePlate4.setSolid(false);
+		pressurePlate4.setTriggerable(true);
+		pressurePlate4.addTrigger(new PressurePlateTrigger(pressurePlate4,removableWall4));
+		
+		addObj(removableWall4);
+		addObj(pressurePlate4);
+		
+		GameObject pillar8 = new GameObject(7100, -550, 100, 900, new Vec(1.0, 0.0));
+		pillar8.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallMiddle")));
+		pillar8.setVisible(true);
+		GameObject pillar8Top = new GameObject(7100, -650, 100, 100, new Vec(1.0, 0.0));
+		pillar8Top.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallTop")));
+		pillar8Top.setVisible(true);
+		GameObject pillar8Bottom = new GameObject(7100,350, 100, 100, new Vec(1.0, 0.0));
+		pillar8Bottom.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("wallBottom")));
+		pillar8Bottom.setVisible(true);
+		
+		addObj(pillar8);
+		addObj(pillar8Top);
+		addObj(pillar8Bottom);
 	}
 	
 	void testLevel(){

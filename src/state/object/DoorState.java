@@ -6,10 +6,12 @@ import java.awt.Graphics2D;
 public class DoorState extends ObjectState{
 
 	private boolean triggered;
+	private Color color;
 	
-	public DoorState(){
+	public DoorState(Color c){
 		super();
 		triggered = false;
+		color = c;
 	}
 	
 	public void isTriggered(boolean t){
@@ -22,11 +24,11 @@ public class DoorState extends ObjectState{
 		
 		if(!triggered){
 			attachedTo.setSolid(true);
-			attachedTo.setColor(new Color(0,0,255));
+			attachedTo.setColor(color);
 		}
 		else{
 			attachedTo.setSolid(false);
-			attachedTo.setColor(new Color(0,0,255,50));
+			attachedTo.setColor(new Color(color.getRed(),color.getGreen(),color.getBlue(),50));
 		}
 		triggered = false;
 	}
