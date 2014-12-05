@@ -32,7 +32,7 @@ public class MainMenuState extends MenuEngineState{
 		//Add Background Image		
 		GameObject backgroundPic = new GameObject(0,0,sm.getPercentageWidth(100),
 									sm.getPercentageHeight(100),new Vec(1.0f,0.0f));
-		//backgroundPic.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("MenuPageClosed")));
+		backgroundPic.setSprite(new Sprite(((ContentManager)Engine.currentInstance.getManager(Engine.Managers.CONTENTMANAGER)).getSprite("MenuPageClosed")));
 		backgroundPic.setVisible(true);
 		addObj(backgroundPic);
 		
@@ -43,7 +43,7 @@ public class MainMenuState extends MenuEngineState{
 				new Vec(1.0f, 0.0f)
 				);
 		
-		startButton.setShape(new Rectangle2D.Double(), Color.gray);
+		startButton.setShape(new Rectangle2D.Double(), Color.blue);
 		startButton.setVisible(true);
 		startButton.pushState(new StartGameButtonState());
 		addObj(startButton);
