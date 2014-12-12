@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D.Double;
 
 import objects.GameObject;
 import sprites.Sprite;
+import state.object.buttons.InstructButtonState;
 import state.object.buttons.StartGameButtonState;
 import engine.Engine;
 import engine.Engine.Managers;
@@ -43,11 +44,21 @@ public class MainMenuState extends MenuEngineState{
 				new Vec(1.0f, 0.0f)
 				);
 		
+		GameObject instructButton = new GameObject(
+				sm.getPercentageWidth(40.0), sm.getPercentageHeight(60.0),
+				sm.getPercentageWidth(20.0), sm.getPercentageHeight(5.0),
+				new Vec(1.0f, 0.0f)
+				);
+		
 		startButton.setShape(new Rectangle2D.Double(), Color.blue);
 		startButton.setVisible(true);
 		startButton.pushState(new StartGameButtonState());
 		addObj(startButton);
 		
+		instructButton.setShape(new Rectangle2D.Double(), Color.blue);
+		instructButton.setVisible(true);
+		instructButton.pushState(new InstructButtonState());
+		addObj(instructButton);
 		
 	}
 
