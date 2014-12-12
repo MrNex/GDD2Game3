@@ -50,12 +50,12 @@ public class MainMenuState extends MenuEngineState{
 				new Vec(1.0f, 0.0f)
 				);
 		
-		startButton.setShape(new Rectangle2D.Double(), Color.blue);
+		startButton.setShape(new Rectangle2D.Double(), Color.white);
 		startButton.setVisible(true);
 		startButton.pushState(new StartGameButtonState());
 		addObj(startButton);
 		
-		instructButton.setShape(new Rectangle2D.Double(), Color.blue);
+		instructButton.setShape(new Rectangle2D.Double(), Color.white);
 		instructButton.setVisible(true);
 		instructButton.pushState(new InstructButtonState());
 		addObj(instructButton);
